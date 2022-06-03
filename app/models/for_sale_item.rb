@@ -1,3 +1,5 @@
 class ForSaleItem < ApplicationRecord
-  belongs_to :seller
+  belongs_to :user
+
+  belongs_to :category
 end
