@@ -1,3 +1,3 @@
 class Category < ApplicationRecord
-  belongs_to :forSaleItem
+  has_many :forSaleItem
 end
