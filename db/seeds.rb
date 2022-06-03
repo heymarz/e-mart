@@ -1,8 +1,8 @@
 puts "🌱 Seeding spices..."
 
-mars = Buyer.create(buyerName: "mars", email: "mars@gmail.com", password: "mars", buyerAddress: "123 Lane Road", buyerCityAndState: "Miami, Florida", buyerZipcode: 33111)
+mars = User.create(username: "mars", email: "mars@gmail.com", password: "mars")
 
-roger = Seller.create(sellerName: "roger", email: "roger@gmail.com", password: "roger", businessName: "Roger Dodger", businessAddress: "333 5th Street", businessCityAndState: "New York, NY", businessZipcode: 10013)
+roger = User.create(username: "roger", email: "roger@gmail.com", password: "roger")
 
 Category.create(categoryName: "Kitchen");
 Category.create(categoryName: "Household Applicances");
