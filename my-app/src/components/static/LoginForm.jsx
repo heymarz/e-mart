@@ -1,14 +1,15 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {headers} from '../../Global'
+import Errors from './Errors';
 
-function LoginForm() {
+function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   function handleLogin(e){
     e.preventDefault();
     
-    fetch('/login',{
+    fetch('http://localhost:3000/login',{
       method: "POST",
       headers: headers,
       body: JSON.stringify({
@@ -18,8 +19,18 @@ function LoginForm() {
         }}),
       })
       .then((r)=>r.json())
-      .then(data=>console.log(data))
+      .then(data=>{
+        if(data.id){
+          loginUser(data);
+        }else{
+          addErrors([data.error])
+        }
+        })
     }
+
+    useEffect(()=>{
+      return()=>clearErrors();
+    },[])
       
   return (
     <div>
@@ -45,6 +56,7 @@ function LoginForm() {
         <br />
         <button type="submit">Sumbit</button>
       </form>
+      <Errors errors={errors} />
     </div>
   )
 }
