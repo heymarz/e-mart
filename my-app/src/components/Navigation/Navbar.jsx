@@ -1,14 +1,25 @@
 import React from 'react'
 import {Link} from "react-router-dom";
+import {GrCart, GrAddCircle, GrLogout, GrLogin } from 'react-icons/gr';
+import {FaStar} from 'react-icons/fa';
+import {BiHomeAlt} from 'react-icons/bi';
+import { AiOutlineUserAdd } from 'react-icons/ai'
+import './navbar.css'
 
 function Navbar ({loggedin, logoutUser}) {
 
   function loggedOutLinks(){
     return (
-      <nav className="nav-Links">
-        <div><Link to="/">Home</Link></div>
-        <div><Link to="/signup">Sign up</Link></div>
-        <div><Link to="/login">Log in</Link></div>
+      <nav className="nav-bar">
+        <span className="nav-Links">
+          <Link to="/"><BiHomeAlt />Home</Link>
+        </span>
+        <span className="nav-Links">
+          <Link to="/signup"><AiOutlineUserAdd/>Sign up</Link>
+        </span>
+        <span className="nav-Links">
+          <Link to="/login"><GrLogin/>Log in</Link>
+        </span>
       </nav>
     )
   }
@@ -21,18 +32,27 @@ function Navbar ({loggedin, logoutUser}) {
 
   function loggedInLinks(){
     return(
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><a href="#!" onClick={handleLogout}>Log out</a></li>
-        <li><Link to="/favorites">Favorites</Link></li>
-        <li><Link to="/posts">Posts</Link></li>
-      </ul>
+      <nav className='nav-bar'>
+        <span className="nav-Links">
+          <Link to="/">Home</Link>
+        </span>
+        <span className="nav-Links">
+          <a href="#!" onClick={handleLogout}><GrLogout />Log out</a>
+        </span>
+        <span className="nav-Links">
+          <Link to="/favorites"><FaStar />Favorites</Link>
+        </span>
+        <span className="nav-Links">
+          <Link to="/posts"><GrAddCircle />Posts</Link>
+        </span>
+      </nav>
     )
   }
 
   return (
-    <div>
-      { loggedin ? loggedInLinks() : loggedOutLinks() }
+    <div className='nav-bar'>
+     <GrCart color="green" size="2em" /><h1 color="green">E-Mart</h1>{ loggedin ? loggedInLinks() : loggedOutLinks() } 
+      
     </div>
   )
 }
