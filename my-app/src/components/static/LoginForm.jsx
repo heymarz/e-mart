@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {headers} from '../../Global'
 import Errors from './Errors';
+import "./styles.css"
 
 function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
   const [username, setUsername] = useState("");
@@ -9,7 +10,7 @@ function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
   function handleLogin(e){
     e.preventDefault();
     
-    fetch('http://localhost:3000/login',{
+    fetch('/login',{
       method: "POST",
       headers: headers,
       body: JSON.stringify({
@@ -34,7 +35,7 @@ function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
       
   return (
     <div>
-      <h1>Log In</h1>
+      <h2 className='header'>Log In</h2>
       <form onSubmit={handleLogin}>
         <label>User name:</label>
         <input
@@ -54,7 +55,7 @@ function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
           autoComplete='current-password'
         />
         <br />
-        <button type="submit">Sumbit</button>
+        <button type="submit">Submit</button>
       </form>
       <Errors errors={errors} />
     </div>

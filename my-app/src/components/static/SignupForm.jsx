@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {headers} from "../../Global";
 import Errors from './Errors';
+import "./styles.css"
 
 function SignupForm({loginUser, addErrors, clearErrors, errors}) {
   const [username, setUsername] = useState("");
@@ -36,14 +37,14 @@ function SignupForm({loginUser, addErrors, clearErrors, errors}) {
 
   return (
     <div>
-      <h1>Sign up Form</h1>
+      <h2 className='header'>Sign up Form</h2>
       <form onSubmit = {handleSignup}>
         <label htmlFor="usename">Username: </label>
         <input 
           type = "text"
           id = "username"
           autoComplete='off'
-          placeholder = "Adam West"
+          placeholder = "MadMax"
           value = {username}
           onChange = {(e)=>setUsername(e.target.value)}
         />
