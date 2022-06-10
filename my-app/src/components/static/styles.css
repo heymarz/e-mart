@@ -3,3 +3,9 @@
   color: hotpink;
   text-shadow: 1px 2px 2px  black;
 }
+
+.error-message{
+  padding: 2px;
+  color: red;
+  display: table;
+}
