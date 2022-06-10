@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import {headers} from '../../Global'
 import Errors from './Errors';
-import "./styles.css"
+import "./styles.css";
+
 
 function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
   const [username, setUsername] = useState("");
@@ -24,7 +25,7 @@ function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
         if(data.id){
           loginUser(data);
         }else{
-          addErrors([data.error])
+          addErrors(data.errors)
         }
         })
     }
@@ -58,6 +59,7 @@ function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
         <button type="submit">Submit</button>
       </form>
       <Errors errors={errors} />
+      
     </div>
   )
 }
