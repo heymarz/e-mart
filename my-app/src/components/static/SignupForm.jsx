@@ -5,6 +5,7 @@ import "./styles.css"
 
 function SignupForm({loginUser, addErrors, clearErrors, errors}) {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
@@ -17,6 +18,7 @@ function SignupForm({loginUser, addErrors, clearErrors, errors}) {
         body: JSON.stringify({
           user: {
             username: username,
+            email: email,
             password: password,
             password_confirmation: passwordConfirmation,
         }}),
@@ -47,6 +49,16 @@ function SignupForm({loginUser, addErrors, clearErrors, errors}) {
           placeholder = "MadMax"
           value = {username}
           onChange = {(e)=>setUsername(e.target.value)}
+        />
+        <br />
+        <label htmlFor="email">Email: </label>
+        <input 
+          type = "text"
+          id = "email"
+          autoComplete='off'
+          placeholder = "MadMax@gmail.com"
+          value = {email}
+          onChange = {(e)=>setEmail(e.target.value)}
         />
         <br />
         <label htmlFor = "password">Password: </label>
