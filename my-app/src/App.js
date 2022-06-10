@@ -7,7 +7,7 @@ import SignupForm from './components/static/SignupForm';
 import Reviews from './components/pages/Reviews'
 
 function App() {
-  const [currentUser, setCurrentUser] = useState("");
+  const [currentUser, setCurrentUser] = useState({});
   const [loggedin, setLoggedin] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -35,8 +35,7 @@ function App() {
         res.json().then(user => loginUser(user))
       }
     })
-  },[]);
-
+  },[])
 
   return (
     <Router>
