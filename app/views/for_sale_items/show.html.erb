@@ -1,6 +1,48 @@
-<p style="color: green"><%= notice %></p>
+<p style="color: green"></p>
 
-<%= render @for_sale_item %>
+  <p>
+    <strong>Title:</strong>
+    <%= @for_sale_item.itemTitle %>
+  </p>
+
+  <p>
+    <strong>Category:</strong>
+    <%= @for_sale_item.category_id %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= @for_sale_item.itemDescription %>
+  </p>
+
+  <p>
+    <strong>Price:</strong>
+    <%= @for_sale_item.itemPrice %>
+  </p>
+
+  <p>
+    <strong>User:</strong>
+    <%= @for_sale_item.user_id %>
+  </p>
+
+<%# <% (0...@for_sale_item.images.count).each do |image| %>
+
+  <%# <% image_tag(@for_sale_item.images[image])%> 
+<%# <% end %>
+
+<div>
+  <% @for_sale_item.images.each do |image| %>
+    <div>
+      <% if image.representable? %>
+        <%= image_tag image.representation(resize_to_limit: [300, 300]) %>
+      <% else %>
+        <%= link_to rails_blob_path(image, disposition: "attachment") do %>
+          <%= image_tag "placeholder.png", alt: "Download file" %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
 
 <div>
   <%= link_to "Edit this for sale item", edit_for_sale_item_path(@for_sale_item) %> |

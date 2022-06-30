@@ -1,7 +1,7 @@
 <%= form_with(model: for_sale_item) do |form| %>
   <% if for_sale_item.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(for_sale_item.errors.count, "error") %> prohibited this for_sale_item from being saved:</h2>
+      <h2><%= pluralize(for_sale_item.errors, "error") %> prohibited this for_sale_item from being saved:</h2>
 
       <ul>
         <% for_sale_item.errors.each do |error| %>
@@ -12,13 +12,8 @@
   <% end %>
 
   <div>
-    <%= form.label :img, style: "display: block" %>
-    <%= form.text_field :img %>
-  </div>
-
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+    <%= form.label :itemTitle, style: "display: block" %>
+    <%= form.text_field :itemTitle %>
   </div>
 
   <div>
@@ -27,18 +22,13 @@
   </div>
 
   <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description %>
+    <%= form.label :itemDescription, style: "display: block" %>
+    <%= form.text_field :itemDescription %>
   </div>
 
   <div>
-    <%= form.label :location, style: "display: block" %>
-    <%= form.text_field :location %>
-  </div>
-
-  <div>
-    <%= form.label :price, style: "display: block" %>
-    <%= form.number_field :price %>
+    <%= form.label :itemPrice, style: "display: block" %>
+    <%= form.number_field :itemPrice, in: 1..10000 %>
   </div>
 
   <div>
@@ -47,6 +37,13 @@
   </div>
 
   <div>
-    <%= form.submit %>
+
+    <%= form.label :images %>
+    <%= form.file_field :images, multiple: true, direct_upload: true %>
+  </div>
+
+
+  <div>
+    <%= form.submit "Post"%>
   </div>
 <% end %>
