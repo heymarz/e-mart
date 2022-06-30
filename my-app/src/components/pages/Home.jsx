@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import PostsContainer from "./Posts/PostsContainter";
 
 function Home () {
   return (
-    <div>Home</div>
+    <div>
+      <PostsContainer />
+    </div>
   )
 }
 
