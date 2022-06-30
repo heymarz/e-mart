@@ -1,9 +1,10 @@
 class ForSaleItemsController < ApplicationController
   before_action :set_for_sale_item, only: %i[ show edit update destroy ]
+  require "pry"
 
   # GET /for_sale_items or /for_sale_items.json
   def index
-    @for_sale_items = ForSaleItem.all
+    @for_sale_items = ForSaleItem.all.with_attached_images
   end
 
   # GET /for_sale_items/1 or /for_sale_items/1.json
@@ -21,17 +22,19 @@ class ForSaleItemsController < ApplicationController
 
   # POST /for_sale_items or /for_sale_items.json
   def create
-    @for_sale_item = ForSaleItem.new(for_sale_item_params)
-
-    respond_to do |format|
-      if @for_sale_item.save
-        format.html { redirect_to for_sale_item_url(@for_sale_item), notice: "For sale item was successfully created." }
-        format.json { render :show, status: :created, location: @for_sale_item }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @for_sale_item.errors, status: :unprocessable_entity }
-      end
-    end
+    for_sale_item = ForSaleItem.create(for_sale_item_params)
+    binding.pry
+    for_sale_item.images.attach(params[:for_sale_item][:images])
+    # respond_to do |format|
+    #   if @for_sale_item.save
+    #     format.html { redirect_to for_sale_item_url(@for_sale_item), notice: "For sale item was successfully created." }
+    #     format.json { render :show, status: :created, location: @for_sale_item }
+    #   else
+    #     format.html { render :new, status: :unprocessable_entity }
+    #     format.json { render json: @for_sale_item.errors, status: :unprocessable_entity }
+    #   end
+    # end
+    render json: @for_sale_item, status: :created
   end
 
   # PATCH/PUT /for_sale_items/1 or /for_sale_items/1.json
@@ -60,11 +63,11 @@ class ForSaleItemsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_for_sale_item
-      @for_sale_item = ForSaleItem.find(params[:id])
+      @for_sale_item = ForSaleItem.find_by(id: params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def for_sale_item_params
-      params.require(:for_sale_item).permit(:img, :title, :category_id, :description, :location, :price, :user_id)
+      params.require(:for_sale_item).permit(:itemTitle, :category_id, :itemDescription, :itemPrice, :user_id, images: [])
     end
 end
