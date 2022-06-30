@@ -4,7 +4,8 @@ import LoginForm from "./components/static/LoginForm"
 import Home from "./components/pages/Home";
 import Navbar from "./components/Navigation/Navbar";
 import SignupForm from './components/static/SignupForm';
-import Reviews from './components/pages/Reviews'
+import PostInput from './components/pages/Posts/PostInput';
+import ErrorPage from "./components/static/ErrorPage";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -65,9 +66,12 @@ function App() {
             />}
           />
           <Route
-            path="/reviews"
-            element={<Reviews />}
+            path="/posts"
+            element={<PostInput userId={currentUser.id} />}
           />
+          <Route 
+            path="*"
+            element={<ErrorPage />} />
         </Routes>
       </main>
     </Router>
