@@ -5,7 +5,6 @@ class CreateForSaleItems < ActiveRecord::Migration[7.0]
       t.integer :category_id
       t.string :itemTitle
       t.integer :itemPrice
-      t.string :itemImg
       t.string :itemDescription
 
       t.timestamps
