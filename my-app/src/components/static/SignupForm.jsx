@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { useNavigate, useNavigationType } from 'react-router-dom';
 import {headers} from "../../Global";
 import Errors from './Errors';
 import "./styles.css"
@@ -8,6 +9,7 @@ function SignupForm({loginUser, addErrors, clearErrors, errors}) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const navigate = useNavigate();
 
   function handleSignup(e){
     e.preventDefault();
@@ -26,7 +28,8 @@ function SignupForm({loginUser, addErrors, clearErrors, errors}) {
       .then((r)=>r.json())
       .then(data=>{
         if(data.id){
-          loginUser(data)
+          loginUser(data);
+          navigate("/")
         }else{
           addErrors([data.error])
         }

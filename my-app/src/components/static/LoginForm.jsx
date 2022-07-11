@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from 'react'
+import { Navigate } from 'react-router-dom';
 import {headers} from '../../Global'
 import Errors from './Errors';
+import { useNavigate } from 'react-router-dom';
 import "./styles.css";
 
 
 function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   function handleLogin(e){
     e.preventDefault();
@@ -24,6 +27,7 @@ function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
       .then(data=>{
         if(data.id){
           loginUser(data);
+          navigate("/");
         }else{
           addErrors(data.errors)
         }
