@@ -1,17 +1,17 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from "react-redux";
-import {fetchForSaleItems} from "./forSaleItemsSlice";
+// import { useEffect } from 'react';
+// import { useSelector, useDispatch } from "react-redux";
+// import {fetchForSaleItems} from "./forSaleItemsSlice";
 
 function PostsContainter(){
-  const itemsArray = useSelector((state)=>state.forSaleItems)
-  const dispatch = useDispatch();
+  // const itemsArray = useSelector((state)=>state.forSaleItems)
+  // const dispatch = useDispatch();
 
-  useEffect(()=>{
-    dispatch(fetchForSaleItems())
-  },[])
+  // useEffect(()=>{
+  //   dispatch(fetchForSaleItems())
+  // },[])
   
-  console.log(itemsArray)
+  // console.log(itemsArray)
   
   return (
     <div>

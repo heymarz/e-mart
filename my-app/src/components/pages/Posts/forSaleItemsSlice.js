@@ -11,12 +11,11 @@ const forSaleItemsSlice = createSlice({
   name: 'items',
   initialState: initialState,
   reducers: {
-    addPost: {
-      reducer(state, action){
+    addPost(state, action){
        const newItem = {...action.payload, id: uuid()} 
       state.forSaleItems.push(newItem)
     },
-  }
+  
   }
 });
 export const {addPost} = forSaleItemsSlice.actions;

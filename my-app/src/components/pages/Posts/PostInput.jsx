@@ -1,25 +1,54 @@
 import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
-import { fetchNewPost } from "./forSaleItemsSlice";
+import { addPost } from "./forSaleItemsSlice";
+import "./post.css"
+
 
 function Posts({userId}) {
   const [postTitle, setPostTitle] = useState("");
   const [itemPrice, setItemPrice] = useState("");
   const [itemDescription, setItemDescription] = useState("");
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState("");
   const [categoryName, setCategoryName] = useState("");
   const dispatch = useDispatch();
   
   function handleSubmitPost(e){
     e.preventDefault();
-    dispatch(fetchNewPost({
+    const formData = ({ 
       user_id: userId,
       category_id: categoryName,
       itemTitle: postTitle,
       itemPrice: itemPrice,
       itemDescription: itemDescription,
-      image,
-    }))
+      images: images,
+    });
+    if (postTitle && images) {
+      console.log(images)
+      fetch("/for_sale_items",{
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(resp=> resp.json())
+      .then((data => {
+        console.log(data)
+        dispatch({ type: "addPost", payload: data })
+      }))
+      // })
+      // loop through each image and use createObjectURL
+    // const imagesArray = URL.createObjectURL(images)
+    
+    // console.log(imagesArray)
+      dispatch(addPost(formData))
+    };
+    // setPostTitle(''),
+    // setItemPrice(''),
+    // setItemDescription(''),
+    // setImage([]),
+    // setCategoryName('')
   }
   
 
@@ -60,13 +89,25 @@ function Posts({userId}) {
           <option value={categoryName.computerAndAccessories}>Computer & Accessories</option>
         </select>
         <br />
-        {/* need to put in active storage */}
         <input 
           type="file" 
-          name="image"
-          multiple
-          onChange={(e)=>setImage(e.target.files)}
+          id="fileElem"
+          name="images"
+          multiple = "multiple"
+          accept='image/jpg, image/png'
+          onChange={(e)=>{
+            // freaks out once i have more than one file. when it comes to URL.createObjectURL()
+            const files = e.target.files
+            
+            for (let i = 0; i < files.length; i++) {
+              const newUrl = URL.createObjectURL(files[i])
+              console.log(newUrl)
+              
+            }
+            setImages(files)
+          }}          
         />
+        {/* <output name="imageThumbnails" id='result' for="image array" /> */}
         <br />
         <button type='submit'>Submit</button>
       </form>
