@@ -22,8 +22,8 @@ class ForSaleItemsController < ApplicationController
 
   # POST /for_sale_items or /for_sale_items.json
   def create
-    for_sale_item = ForSaleItem.create(for_sale_item_params)
     binding.pry
+    for_sale_item = ForSaleItem.create(for_sale_item_params)
     for_sale_item.images.attach(params[:for_sale_item][:images])
     # respond_to do |format|
     #   if @for_sale_item.save
@@ -68,6 +68,6 @@ class ForSaleItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def for_sale_item_params
-      params.require(:for_sale_item).permit(:itemTitle, :category_id, :itemDescription, :itemPrice, :user_id, images: [])
+      params.require(:for_sale_item).permit(:id, :itemTitle, :category_id, :itemDescription, :itemPrice, :user_id, images: [])
     end
 end
