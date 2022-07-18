@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import { Navigate } from 'react-router-dom';
 import {headers} from '../../Global'
 import Errors from './Errors';
 import { useNavigate } from 'react-router-dom';

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useNavigate, useNavigationType } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {headers} from "../../Global";
 import Errors from './Errors';
 import "./styles.css"
