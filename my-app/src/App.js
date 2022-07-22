@@ -8,7 +8,7 @@ import PostInput from './components/pages/Posts/PostInput';
 import ErrorPage from "./components/static/ErrorPage";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState();
   const [loggedin, setLoggedin] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -33,10 +33,12 @@ function App() {
     fetch('/me')
     .then(res=>{
       if(res.ok){
-        res.json().then(user => loginUser(user))
+        res.json().then(user => {
+        loginUser(user);})
       }
     })
   },[])
+
 
   return (
     <Router>
@@ -66,8 +68,8 @@ function App() {
             />}
           />
           <Route
-            path="/posts"
-            element={<PostInput userId={currentUser.id} />}
+            path="/posts/new"
+            element={<PostInput user={currentUser} />}
           />
           <Route 
             path="*"

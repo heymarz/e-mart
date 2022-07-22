@@ -1,21 +1,23 @@
 import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
 import { addPost } from "./forSaleItemsSlice";
-import "./post.css"
+import "./post.css";
+import { DirectUpload } from "@rails/activestorage";
 
-
-function Posts({userId}) {
+function Posts({user}) {
   const [postTitle, setPostTitle] = useState("");
   const [itemPrice, setItemPrice] = useState("");
   const [itemDescription, setItemDescription] = useState("");
   const [images, setImages] = useState("");
   const [categoryName, setCategoryName] = useState("");
   const dispatch = useDispatch();
-  
+  console.log(images)
+  const input = document.querySelector('input[type=file]')
+
   function handleSubmitPost(e){
     e.preventDefault();
     const formData = ({ 
-      user_id: userId,
+      user_id: user.id,
       category_id: categoryName,
       itemTitle: postTitle,
       itemPrice: itemPrice,
@@ -23,26 +25,21 @@ function Posts({userId}) {
       images: images,
     });
     if (postTitle && images) {
-      console.log(images)
+      console.log(formData);
       fetch("/for_sale_items",{
         method: "POST",
         headers: {
+          "Content-type": "application/json",
           "Accept": "application/json",
-          "Content-type": "application/json"
         },
         body: JSON.stringify(formData)
       })
-      .then(resp=> resp.json())
-      .then((data => {
-        console.log(data)
-        dispatch({ type: "addPost", payload: data })
-      }))
-      // })
-      // loop through each image and use createObjectURL
-    // const imagesArray = URL.createObjectURL(images)
-    
-    // console.log(imagesArray)
-      dispatch(addPost(formData))
+      .then(r=> r.json())
+      .then((data) => {
+        // console.log(data)
+        // dispatch({ type: "addPost", payload: data })
+        return dispatch(addPost(data))
+      })
     };
     // setPostTitle(''),
     // setItemPrice(''),
@@ -50,13 +47,20 @@ function Posts({userId}) {
     // setImage([]),
     // setCategoryName('')
   }
-  
 
   return (
     <div className="new-post">
       <h1 className='header'>Add a new posting</h1>
-      <form onSubmit={handleSubmitPost}>
+      <form id="newPostForm" onSubmit={handleSubmitPost}>
         <label htmlFor='item-title'>Post Title: </label>
+        <label html="userId">
+          <input 
+            type="hidden"
+            name="userId"
+            value="user.id"
+
+          />
+        </label>
         <input 
           type='text'
           name='postTitle'
@@ -83,31 +87,30 @@ function Posts({userId}) {
         <label htmlFor="type">Category: </label>
         <select onChange={(e)=>setCategoryName(e.target.value)}>
           <option>Choose from the drop down list </option>
-          <option value={categoryName.kitchen} >Kitchen</option>
-          <option value={categoryName.householdApplicances}>Household Applicances</option>
-          <option value={categoryName.furniture}>Furniture</option>
-          <option value={categoryName.computerAndAccessories}>Computer & Accessories</option>
+          <option value={1} >Kitchen</option>
+          <option value={2}>Household Applicances</option>
+          <option value={3}>Furniture</option>
+          <option value={4}>Computer & Accessories</option>
         </select>
         <br />
         <input 
           type="file" 
-          id="fileElem"
+          className='chosen-images'
           name="images"
           multiple = "multiple"
           accept='image/jpg, image/png'
+          data-direct-upload-url="<%= rails_direct_uploads_url %>"
           onChange={(e)=>{
-            // freaks out once i have more than one file. when it comes to URL.createObjectURL()
             const files = e.target.files
             
             for (let i = 0; i < files.length; i++) {
               const newUrl = URL.createObjectURL(files[i])
               console.log(newUrl)
-              
             }
+            //this is where it is breaking::nonserializable value was detected in an action, in the path: "payload.images"......
             setImages(files)
           }}          
         />
-        {/* <output name="imageThumbnails" id='result' for="image array" /> */}
         <br />
         <button type='submit'>Submit</button>
       </form>
