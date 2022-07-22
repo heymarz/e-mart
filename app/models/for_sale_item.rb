@@ -1,3 +1,4 @@
+require "pry"
 class ForSaleItem < ApplicationRecord
   belongs_to :user
   belongs_to :category
@@ -10,17 +11,24 @@ class ForSaleItem < ApplicationRecord
   # .each do |attachable|
   #   attachable.representation(resize_to_limit: [100, 100]).processed.url
   # end
-  
-  # with_all_variant_records.each do |image|
-      # image_tag image.representation(resize_to_limit: [100, 100]).processed.url
-    # end
+ 
+    def self.append_images
+      binding.pry
+      if images.present?
+        params[:for_sale_item][:images].each do |image|
+          for_sale_item.images.attach(io: File.open('image'),
+          filename: "image")
+        end
+      end
+    end
 
 
   private
   def image_type
     if images.attached? == false
       errors.add(:images, "are missing!")
-    images.each do |image|
+    else
+      images.each do |image|
         if !image.content_type.in?(%('image/jpeg image/png'))
           errors.add(:images, 'needs to be a JPEG or PNG')
         end
