@@ -4,11 +4,11 @@ import { addPost } from "./forSaleItemsSlice";
 import "./post.css";
 import { DirectUpload } from "@rails/activestorage";
 
-function Posts({user}) {
+function PostInput({user}) {
   const [postTitle, setPostTitle] = useState("");
   const [itemPrice, setItemPrice] = useState("");
   const [itemDescription, setItemDescription] = useState("");
-  const [images, setImages] = useState("");
+  const [images, setImages] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const dispatch = useDispatch();
   console.log(images)
@@ -99,16 +99,15 @@ function Posts({user}) {
           name="images"
           multiple = "multiple"
           accept='image/jpg, image/png'
-          data-direct-upload-url="<%= rails_direct_uploads_url %>"
           onChange={(e)=>{
             const files = e.target.files
-            
             for (let i = 0; i < files.length; i++) {
-              const newUrl = URL.createObjectURL(files[i])
+              //only taking last one atm...
+              let newUrl = [URL.createObjectURL(files[i])]
               console.log(newUrl)
+              setImages(newUrl)
             }
             //this is where it is breaking::nonserializable value was detected in an action, in the path: "payload.images"......
-            setImages(files)
           }}          
         />
         <br />
@@ -118,4 +117,4 @@ function Posts({user}) {
   )
 }
 
-export default Posts;
+export default PostInput;

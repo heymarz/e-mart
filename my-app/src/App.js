@@ -68,7 +68,7 @@ function App() {
             />}
           />
           <Route
-            path="/posts/new"
+            path="/posts"
             element={<PostInput user={currentUser} />}
           />
           <Route 
