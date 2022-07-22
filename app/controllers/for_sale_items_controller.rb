@@ -1,5 +1,6 @@
 class ForSaleItemsController < ApplicationController
-  before_action :set_for_sale_item, only: %i[ show edit update destroy ]
+  before_action :set_for_sale_item, only: %i[ show edit update destroy ]›
+  # before_action :append_images, only: %i[create]
   require "pry"
 
   # GET /for_sale_items or /for_sale_items.json
@@ -23,17 +24,10 @@ class ForSaleItemsController < ApplicationController
   # POST /for_sale_items or /for_sale_items.json
   def create
     binding.pry
-    for_sale_item = ForSaleItem.create(for_sale_item_params)
-    for_sale_item.images.attach(params[:for_sale_item][:images])
-    # respond_to do |format|
-    #   if @for_sale_item.save
-    #     format.html { redirect_to for_sale_item_url(@for_sale_item), notice: "For sale item was successfully created." }
-    #     format.json { render :show, status: :created, location: @for_sale_item }
-    #   else
-    #     format.html { render :new, status: :unprocessable_entity }
-    #     format.json { render json: @for_sale_item.errors, status: :unprocessable_entity }
-    #   end
-    # end
+    @for_sale_item = ForSaleItem.create(for_sale_item_params)
+    @for_sale_item.images.each do |image|
+      image.attach(io: File.open("/path/to/file.jpg"), filename: "pic.jpg", content_type: "image/jpg").
+      end
     render json: @for_sale_item, status: :created
   end
 
@@ -68,6 +62,15 @@ class ForSaleItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def for_sale_item_params
-      params.require(:for_sale_item).permit(:id, :itemTitle, :category_id, :itemDescription, :itemPrice, :user_id, images: [])
+      params.require(:for_sale_item).permit(:id, :itemTitle, :category_id, :itemDescription, :itemPrice, :user_id, images:[])
     end
+
+    # def append_images
+    #   if images.present?
+    #   params[:for_sale_item][:images].each do |image|
+    #     for_sale_item.images.attach(io: File.open('image'),
+    #     filename: "image")
+    #   end
+  #   end
+  # end
 end
