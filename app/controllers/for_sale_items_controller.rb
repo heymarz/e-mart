@@ -1,7 +1,7 @@
+require "pry"
 class ForSaleItemsController < ApplicationController
-  before_action :set_for_sale_item, only: %i[ show edit update destroy ]›
+  before_action :set_for_sale_item, only: %i[ show edit update destroy ]
   # before_action :append_images, only: %i[create]
-  require "pry"
 
   # GET /for_sale_items or /for_sale_items.json
   def index
@@ -26,7 +26,7 @@ class ForSaleItemsController < ApplicationController
     binding.pry
     @for_sale_item = ForSaleItem.create(for_sale_item_params)
     @for_sale_item.images.each do |image|
-      image.attach(io: File.open("/path/to/file.jpg"), filename: "pic.jpg", content_type: "image/jpg").
+      image.attach(io: File.open("/path/to/file.jpg"), filename: "pic.jpg", content_type: "image/jpg")
       end
     render json: @for_sale_item, status: :created
   end
