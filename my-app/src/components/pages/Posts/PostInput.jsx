@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
 import { addPost } from "./forSaleItemsSlice";
 import "./post.css";
-import { DirectUpload } from "@rails/activestorage";
 
 function PostInput({user}) {
   const [postTitle, setPostTitle] = useState("");
@@ -11,8 +10,6 @@ function PostInput({user}) {
   const [images, setImages] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const dispatch = useDispatch();
-  console.log(images)
-  const input = document.querySelector('input[type=file]')
 
   function handleSubmitPost(e){
     e.preventDefault();
@@ -25,8 +22,7 @@ function PostInput({user}) {
       images: images,
     });
     if (postTitle && images) {
-      console.log(formData);
-      fetch("/for_sale_items",{
+        fetch("/for_sale_items",{
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -37,7 +33,6 @@ function PostInput({user}) {
       .then(r=> r.json())
       .then((data) => {
         // console.log(data)
-        // dispatch({ type: "addPost", payload: data })
         return dispatch(addPost(data))
       })
     };
@@ -100,16 +95,16 @@ function PostInput({user}) {
           multiple = "multiple"
           accept='image/jpg, image/png'
           onChange={(e)=>{
-            const files = e.target.files
-            for (let i = 0; i < files.length; i++) {
-              //only taking last one atm...
-              let newUrl = [URL.createObjectURL(files[i])]
-              console.log(newUrl)
-              setImages(newUrl)
+            const img = e.target.files     
+            const imgs = []   
+            for (let i = 0; i < img.length; ++i) {
+              const newUrl = URL.createObjectURL(img[i])
+              imgs.push(newUrl)
             }
-            //this is where it is breaking::nonserializable value was detected in an action, in the path: "payload.images"......
-          }}          
+            setImages(imgs)          
+          }}
         />
+        <output className='output'></output>
         <br />
         <button type='submit'>Submit</button>
       </form>
