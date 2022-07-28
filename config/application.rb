@@ -14,7 +14,9 @@ module EMart
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins 'http://localhost:4000'
-        resource '*', headers: :any, methods: [:get, :post, :patch, :delete, :options]
+        resource '*', 
+        headers: :any, 
+        methods: [:get, :post, :patch, :delete, :options]
       end
     end
     # Configuration for the application, engines, and railties goes here.

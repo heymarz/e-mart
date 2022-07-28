@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import App from "./App";
+
 // import { composeWithDevTools } from "redux-devtools-extension";
 // const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 import { store } from "./store"
