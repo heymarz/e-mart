@@ -32,10 +32,10 @@
     <div>
       <% if image.representable? %>
         <%= image_tag image.representation(resize_to_limit: [100, 100]) %>
-      <% else %>
-        <%= link_to rails_blob_path(image, disposition: "attachment") do %>
-          <%= image_tag "placeholder.png", alt: "Download file" %>
-        <% end %>
+      <%# <% else %> %>
+        <%# <%= link_to rails_blob_path(image, disposition: "attachment") do %> %>
+          <%# <%= image_tag "image", alt: "Download file" %> %>
+        <%# <% end %> %>
       <% end %>
     </div>
   <% end %>
