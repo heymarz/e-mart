@@ -1,27 +1,41 @@
 import React from 'react';
-// import { useEffect } from 'react';
-// import { useSelector, useDispatch } from "react-redux";
-// import {fetchForSaleItems} from "./forSaleItemsSlice";
+import { useEffect,useState } from 'react';
+import PostCards from './PostCards';
+import { useNavigate } from "react-router-dom"
+import './post.css'
 
 function PostsContainter(){
-  // const itemsArray = useSelector((state)=>state.forSaleItems)
-  // const dispatch = useDispatch();
+  const [data, setData] = useState([])
+  const navigate = useNavigate();
 
-  // useEffect(()=>{
-  //   dispatch(fetchForSaleItems())
-  // },[])
+
+  useEffect(()=>{
+   fetch('/for_sale_items')
+   .then(r=> r.json())
+   .then((data)=> setData(data))
+  },[])
   
-  // console.log(itemsArray)
+  const displayItems = data.map((item)=> {
+    return(
+      <PostCards 
+        key={item.id} 
+        item={item}
+        handleDeleteItem={handleDeleteItem}
+      />
+    )
+  })
+
+  function handleDeleteItem(id){
+    const updateArray = data.filter((item) => item.id === id);
+    setData(updateArray)
+    navigate("/")
+  }
   
   return (
     <div>
-      <h1>For Sale Items</h1>
+      <h1 className='container'>For Sale Items</h1>
       <ul>
-     
-        {/* {forSaleItems.map((post)=>(
-          <li key={post}>{post}</li>
-        ))}  */}
-        
+        {displayItems}
       </ul>
     </div>
   )
