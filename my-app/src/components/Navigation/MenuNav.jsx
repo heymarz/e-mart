@@ -6,6 +6,8 @@ import { AiOutlineUserAdd } from 'react-icons/ai';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Col from "react-bootstrap/Col";
+import Row from 'react-bootstrap/Row';
 import './navbar.css'
 
 function MenuNav ({loggedin, logoutUser}) {
@@ -38,19 +40,23 @@ function MenuNav ({loggedin, logoutUser}) {
   }
 
   return (
-    <Navbar collapseOnSelect expand="md" bg="info" >
+    <Navbar collapseOnSelect expand="lg" bg="info" >
       <Container>
         <Navbar.Brand href="#home"><GrCart />E-Mart</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-          { loggedin ? loggedInLinks() : loggedOutLinks() } 
-          </Nav>
-          <Nav>
-            <Nav.Link href="#deets">About</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
-              Contacts
-            </Nav.Link>
+            <Row>
+              <Col>
+                { loggedin ? loggedInLinks() : loggedOutLinks() }
+              </Col> 
+              <Col>
+                <Nav.Link href="#deets">About</Nav.Link>
+                <Nav.Link eventKey={2} href="#memes">
+                  Contacts
+                </Nav.Link>
+              </Col>
+            </Row>
           </Nav>
         </Navbar.Collapse>
       </Container>
