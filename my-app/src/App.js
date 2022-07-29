@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import LoginForm from "./components/static/LoginForm"
 import Home from "./components/pages/Home";
-import Navbar from "./components/Navigation/Navbar";
+import MenuNav from "./components/Navigation/MenuNav";
 import SignupForm from './components/static/SignupForm';
 import PostInput from './components/pages/Posts/PostInput';
 import ErrorPage from "./components/static/ErrorPage";
@@ -42,7 +42,7 @@ function App() {
 
   return (
     <Router>
-      <Navbar loggedin={loggedin} logoutUser={logoutUser}/>
+      <MenuNav loggedin={loggedin} logoutUser={logoutUser}/>
       <main>
         <Routes>
           <Route

@@ -3,9 +3,9 @@ import './styles.css'
 
 function Error({error}) {
   return (
-    <li className='error-message'>
+    <div className='error-message'>
       {error}
-    </li>
+    </div>
   )
 }
 

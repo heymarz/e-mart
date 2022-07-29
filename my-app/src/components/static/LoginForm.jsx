@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react'
 import {headers} from '../../Global'
 import Errors from './Errors';
 import { useNavigate } from 'react-router-dom';
-import "./styles.css";
-
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
   const [username, setUsername] = useState("");
@@ -39,30 +39,33 @@ function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
       
   return (
     <div>
-      <h2 className='header'>Log In</h2>
-      <form onSubmit={handleLogin}>
-        <label>User name:</label>
-        <input
-          type="text"
-          id="username"
-          autoComplete='off'
-          value={username}
-          onChange={(e)=>setUsername(e.target.value)}
-        />
+       <h2 className='header'>Log In</h2>
+       
+      <Form onSubmit={handleLogin}>
+        <Form.Group className="ms-5" controlId="formGroupUsername">
+          <Form.Label>User name:</Form.Label>
+          <Form.Control
+            type="username"
+            autoComplete='off'
+            placeholder="Enter username"
+            value={username}
+            onChange={(e)=>setUsername(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="ms-5" controlId="formGroupPassword">
+          <Form.Label>Password:</Form.Label>
+          <Form.Control
+            type = "password"
+            value={password}
+            onChange={(e)=>setPassword(e.target.value)}
+            autoComplete='current-password'
+          />
+        </Form.Group>
         <br />
-        <label htmlFor="password">Password:</label>
-        <input
-          type = "password"
-          id = "password"
-          value={password}
-          onChange={(e)=>setPassword(e.target.value)}
-          autoComplete='current-password'
-        />
-        <br />
-        <button type="submit">Submit</button>
-      </form>
+        <Button className="ms-5" variant="primary" size="sm" type="submit">Submit</Button>
+        
+      </Form>
       <Errors errors={errors} />
-      
     </div>
   )
 }

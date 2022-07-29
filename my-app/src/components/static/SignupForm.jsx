@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {headers} from "../../Global";
 import Errors from './Errors';
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import "./styles.css"
 
 function SignupForm({loginUser, addErrors, clearErrors, errors}) {
@@ -43,47 +45,49 @@ function SignupForm({loginUser, addErrors, clearErrors, errors}) {
   return (
     <div>
       <h2 className='header'>Sign up Form</h2>
-      <form onSubmit = {handleSignup}>
-        <label htmlFor="usename">Username: </label>
-        <input 
-          type = "text"
-          id = "username"
-          autoComplete='off'
-          placeholder = "MadMax"
-          value = {username}
-          onChange = {(e)=>setUsername(e.target.value)}
-        />
-        <br />
-        <label htmlFor="email">Email: </label>
-        <input 
-          type = "text"
-          id = "email"
-          autoComplete='off'
-          placeholder = "MadMax@gmail.com"
-          value = {email}
-          onChange = {(e)=>setEmail(e.target.value)}
-        />
-        <br />
-        <label htmlFor = "password">Password: </label>
-        <input
+      <Form onSubmit = {handleSignup}>
+        <Form.Group className="ms-5" controlId="formGroupUsername">
+          <Form.Label htmlFor="usename">Username: </Form.Label>
+          <Form.Control 
+            type = "text"
+            autoComplete='off'
+            placeholder = "Enter username"
+            value = {username}
+            onChange = {(e)=>setUsername(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="ms-5" controlId="formGroupEmail">
+          <Form.Label htmlFor="email">Email: </Form.Label>
+          <Form.Control 
+            type = "email"
+            autoComplete='off'
+            placeholder = "Enter Email"
+            value = {email}
+            onChange = {(e)=>setEmail(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="ms-5" controlId="formGroupPassword">
+        <Form.Label htmlFor = "password">Password: </Form.Label>
+        <Form.Control
           type = "password"
-          id = "password"
           value = {password}
+          placeholder= "Enter Password"
           onChange = {(e)=> setPassword(e.target.value)}
           autoComplete = "current-password"
         />
-        <br />
-        <label htmlFor="password">Password Confirmation: </label>
-        <input
-          type = "password"
-          id = "password_confirmation"
-          value = {passwordConfirmation}
-          onChange = {(e)=>setPasswordConfirmation(e.target.value)}
-          autoComplete = "current-password"
-        />
-        <br />
-        <button type="submit">Sign up</button>
-      </form>
+        </Form.Group>
+        <Form.Group className="ms-5" controlId="formGroupPassword">
+          <Form.Label htmlFor="password">Password Confirmation: </Form.Label>
+          <Form.Control
+            type = "password"
+            placeholder= "Re-enter Password"
+            value = {passwordConfirmation}
+            onChange = {(e)=>setPasswordConfirmation(e.target.value)}
+            autoComplete = "current-password"
+          />
+        </Form.Group>
+        <Button type="submit" className='ms-5'>Sign up</Button>
+      </Form>
       <Errors errors={errors} />
    </div>
   )
