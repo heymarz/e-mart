@@ -87,15 +87,20 @@ function PostInput({user}) {
         </Form.Group>
           <Form.Group className="ms-5" controlId="formGroupCategoryName"> 
             <Form.Label>Category: </Form.Label>
-              <Dropdown.Menu onChange={(e)=>setCategoryName(e.target.value)}>
-                <Dropdown.Item>Choose from the drop down list </Dropdown.Item>
-                <Dropdown.Item eventKey="1" >Kitchen</Dropdown.Item>
-                <Dropdown.Item eventKey="2">Household Applicances</Dropdown.Item>
-                <Dropdown.Item eventKey="3">Furniture</Dropdown.Item>
-                <Dropdown.Item eventKey="4">Computer & Accessories</Dropdown.Item>
-              </Dropdown.Menu>
+            <Dropdown>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                Choose from the drop down list
+              </Dropdown.Toggle>
+                <Dropdown.Menu onChange={(e)=>setCategoryName(e.target.value)}>
+                  <Dropdown.Item> </Dropdown.Item>
+                  <Dropdown.Item value={1} >Kitchen</Dropdown.Item>
+                  <Dropdown.Item value={2}>Household Applicances</Dropdown.Item>
+                  <Dropdown.Item value={3}>Furniture</Dropdown.Item>
+                  <Dropdown.Item value={4}>Computer & Accessories</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
           </Form.Group> 
-          <Form.Group className="ms-5" controlId="formGroupImages">
+          <Form.Group className="ms-5 mt-3" controlId="formGroupImages">
             <Form.Control 
               type="file"
               name="images"
