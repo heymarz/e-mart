@@ -1,31 +1,69 @@
-import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
-import { addPost } from "./forSaleItemsSlice";
+import React, {useState, useEffect} from 'react';
 import "./post.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-
+import PostCards from './PostCards';
+import { storage } from "../../../firebase";
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
 
 function PostInput({user}) {
-  const [postTitle, setPostTitle] = useState("");
+  const [itemTitle, setItemTitle] = useState("");
   const [itemPrice, setItemPrice] = useState("");
   const [itemDescription, setItemDescription] = useState("");
-  const [images, setImages] = useState([]);
-  const [categoryName, setCategoryName] = useState("");
-  const dispatch = useDispatch();
+  const [images, setImages] = useState(null);
+  const [categoryName, setCategoryName] = useState(""); 
+  const [chosenCategory, setChosenCategory] = useState("");
+  const [favorite, setFavorite] = useState(false)
+  const [imageUrl, setImageUrl] = useState([])
+
+  // const forSaleItemsArray = fetch('/for_sale_items',{
+  //   method: "GET",
+  //   headers: {
+  //     'content-type': 'application/json',
+  //     'accept': 'application/json'
+  //   }
+  //   .then(r =>r.json())
+  //   .then((saleItems)=>)
+  // })
+
+  useEffect(()=>{
+    fetch('/categories',{
+      method: "GET",
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      }
+    })
+    .then((r)=>r.json())
+    .then((data)=>setCategoryName(data))
+  },[])
+  
+  // const ownItemsArray = user && selectAllPosts
+  // .filter((item)=>{
+  //   return user.id === item.user_id})
+  // .map((item)=> {
+  //     return(
+  //       <PostCards 
+  //         key={item.id} 
+  //         item={item}
+  //       />
+  //     )
+  //   })
 
   function handleSubmitPost(e){
     e.preventDefault();
     const formData = ({ 
       user_id: user.id,
-      category_id: categoryName,
-      itemTitle: postTitle,
+      category_id: chosenCategory,
+      itemTitle: itemTitle,
       itemPrice: itemPrice,
       itemDescription: itemDescription,
       images: images,
     });
-    if (postTitle && images) {
+    if (itemTitle && images) {
         fetch("/for_sale_items",{
         method: "POST",
         headers: {
@@ -34,19 +72,39 @@ function PostInput({user}) {
         },
         body: JSON.stringify(formData)
       })
-      .then(r=> r.json())
+      .then((r)=> r.json())
       .then((data) => {
-        // console.log(data)
-        return dispatch(addPost(data))
-      })
-    };
-    // setPostTitle(''),
-    // setItemPrice(''),
-    // setItemDescription(''),
-    // setImage([]),
-    // setCategoryName('')
+        console.log(data)
+    })
+    setItemTitle('');
+    setItemPrice('');
+    setItemDescription('');
+    setImages(null);
+    setCategoryName('');
   }
-
+  }
+  
+  const imageListRef = ref(storage, "images/")
+  function uploadImages(){
+    if (images == null) return;
+    const imageRef = ref(storage,`images/${images.name + v4()}`);
+    uploadBytes(imageRef, images).then((snaphsot)=>{
+      getDownloadURL(snaphsot.ref).then(url =>{
+        setImageUrl((prev)=> [...prev, url])
+      })
+    })
+  }
+  
+    useEffect(()=>{
+      listAll(imageListRef).then((r)=>{
+        r.items.forEach((item)=>{
+          getDownloadURL(item).then((url)=> {
+            setImageUrl((prev)=> [...prev, url])
+          })
+        })
+      })
+    },[])
+  
   return (
     <div className="new-post">
       <h1 className='header'>Add a new posting</h1>
@@ -62,9 +120,9 @@ function PostInput({user}) {
           <Form.Label>Post Title: </Form.Label>
           <Form.Control 
             type='text'
-            name='postTitle'
-            value={postTitle}
-            onChange={(e)=>setPostTitle(e.target.value)}
+            name='itemTitle'
+            value={itemTitle}
+            onChange={(e)=>setItemTitle(e.target.value)}
           />
         </Form.Group>
         <Form.Group className="ms-5" controlId="formGroupItemPrice">
@@ -85,40 +143,43 @@ function PostInput({user}) {
             onChange={(e)=>setItemDescription(e.target.value)}
           />
         </Form.Group>
-          <Form.Group className="ms-5" controlId="formGroupCategoryName"> 
-            <Form.Label>Category: </Form.Label>
-            <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Choose from the drop down list
-              </Dropdown.Toggle>
-                <Dropdown.Menu onChange={(e)=>setCategoryName(e.target.value)}>
-                  <Dropdown.Item> </Dropdown.Item>
-                  <Dropdown.Item value={1} >Kitchen</Dropdown.Item>
-                  <Dropdown.Item value={2}>Household Applicances</Dropdown.Item>
-                  <Dropdown.Item value={3}>Furniture</Dropdown.Item>
-                  <Dropdown.Item value={4}>Computer & Accessories</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-          </Form.Group> 
+            <DropdownButton 
+              className = "ms-5 mt-3"
+              id = "dropdown-category-button" 
+              title = {categoryName && categoryName.filter((category) => category.id === chosenCategory
+                )} 
+             onSelect={(e)=>setChosenCategory(e)}>
+              { 
+                categoryName && categoryName.map((cat)=>{
+                    return(
+                      <Dropdown.Item eventKey={cat.id} key={cat.id}>{cat.categoryName}</Dropdown.Item>
+                    )
+                  })
+              }
+            </DropdownButton>
           <Form.Group className="ms-5 mt-3" controlId="formGroupImages">
             <Form.Control 
               type="file"
               name="images"
               multiple = "multiple"
               accept='image/jpg, image/png'
-              onChange={(e)=>{
-                const img = e.target.files     
-                const imgs = []   
-                for (let i = 0; i < img.length; ++i) {
-                  const newUrl = URL.createObjectURL(img[i])
-                  imgs.push(newUrl)
-                }
-                setImages(imgs)          
-              }}
+              onChange={(e)=>{setImages(e.target.files)}}
             />
+          <Form.Label>
+            <Form.Control 
+              type="hidden" 
+              value="false"
+              ref={x => {setFavorite(false)}}
+              />
+          </Form.Label>
           </Form.Group>
-          <Button type='submit' className='ms-5 mt-2'>Submit</Button>
+          <Button onClick={uploadImages} type='submit' className='ms-5 mt-2'>Submit</Button>
+          {imageUrl.map((url, index)=>{
+            return <img src={url} key ={index} />
+          })}
       </Form>
+      <h3>My Selling List:</h3>
+      {/* {ownItemsArray} */}
     </div>
   )
 }
