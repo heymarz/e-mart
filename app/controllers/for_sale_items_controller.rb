@@ -27,24 +27,7 @@ class ForSaleItemsController < ApplicationController
   # POST /for_sale_items or /for_sale_items.json
   def create
     @for_sale_item = ForSaleItem.create(for_sale_item_params)
-    if params[:images].present?
-      blobArray = []
-      params[:images].each do |image|
-        blob = ActiveStorage::Blob.create_before_direct_upload!(filename: image, byte_size: 'size', checksum: 'checksum', metadata:'metadata')
-      
-        #   ActiveStorage::Attachment.create(
-          #     name: 'file',
-          #     record_type: 'images',
-          #     record_id: image,
-          #     blob_id: blob.signed_id()
-          # )
-          blobArray.push(blob)
-          @for_sale_item.images.attach(blobArray)
-          @for_sale_item.save
-      end
-      # @for_sale_item.images.attach(io: File.open("/tmp/storage"), filename: "image.jpg", content_type: "image/jpg")
-      binding.pry
-    end
+    binding.pry
     return render json: @for_sale_item, status: :created
   end
 
@@ -75,7 +58,7 @@ class ForSaleItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def for_sale_item_params
-      params.require(:for_sale_item).permit(:id, :itemTitle, :category_id, :itemDescription, :itemPrice, :user_id, images: [])
+      params.require(:for_sale_item).permit(:id, :itemTitle, :category_id, :itemDescription, :itemPrice, :user_id, :images_id)
     end
 
 end
