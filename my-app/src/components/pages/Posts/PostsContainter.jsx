@@ -7,7 +7,11 @@ import './post.css'
 function PostsContainter(){
   const [data, setData] = useState([])
   const navigate = useNavigate();
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
+
+  function showDetails(post_id){
+    navigate(`/for_sale_items/${post_id}`)
+  }
 
   useEffect(()=>{
    fetch('/for_sale_items')
@@ -22,29 +26,24 @@ function PostsContainter(){
   .map((item)=> {
     return(
       <PostCards 
-        key={item.id} 
-        item={item}
-        handleDeleteItem={handleDeleteItem}
-      />
+          key={item.id} 
+          item={item}
+          showDetails = {showDetails}
+        />
     )
   })
 
   function handleSearch(newSearch){
     setSearch(newSearch)
   }
-
-  function handleDeleteItem(id){
-    const updateArray = data.filter((item) => item.id === id);
-    setData(updateArray)
-    navigate("/")
-  }
   
   return (
     <div>
       <h1 className='container'>For Sale Items</h1>
-      <Search data={data} handleSearch={handleSearch} />
+      <Search handleSearch={handleSearch} />
       <ul>
         {displayItems}
+        <p>hi</p>
       </ul>
     </div>
   )

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from "react-bootstrap/Button"
 
-function Search({ data, handleSearch }) {
+function Search({ handleSearch }) {
   const [search, setSearch] = useState("")
 
   function handleSubmit(e){

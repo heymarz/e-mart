@@ -6,6 +6,9 @@ import MenuNav from "./components/Navigation/MenuNav";
 import SignupForm from './components/static/SignupForm';
 import PostInput from './components/pages/Posts/PostInput';
 import ErrorPage from "./components/static/ErrorPage";
+import Favorites from "./components/pages/Favorites";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import PostDetails from './components/pages/Posts/PostDetails';
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
@@ -47,7 +50,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Home />}
+            element={<Home currentUser={currentUser}/>}
           />
           <Route
             path="/login"
@@ -70,6 +73,14 @@ function App() {
           <Route
             path="/posts"
             element={<PostInput user={currentUser} />}
+          />
+          <Route
+            path="/favorites"
+            element={<Favorites user={currentUser} />}
+          />
+          <Route
+            exact path="/for_sale_items/:forSaleItemId"
+            element={<PostDetails user={currentUser}/>}
           />
           <Route 
             path="*"
