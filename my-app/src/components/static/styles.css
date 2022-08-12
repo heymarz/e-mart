@@ -1,6 +1,6 @@
 .header{
   text-align: center;
-  color: hotpink;
+  color: rgb(116, 66, 233);
   text-shadow: 1px 2px 2px  black;
 }
 
@@ -8,4 +8,15 @@
   padding: 2px;
   color: red;
   display: table;
+}
+
+.center{
+  text-align: center;
+}
+
+.text-container{
+  border: solid navy;
+  margin: 35px;
+  padding: 15px;
+  border-radius: 25px;
 }
