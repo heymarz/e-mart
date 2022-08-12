@@ -38,7 +38,7 @@ function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
     },[])
       
   return (
-    <div>
+    <div className='text-container'>
        <h2 className='header'>Log In</h2>
        
       <Form onSubmit={handleLogin}>

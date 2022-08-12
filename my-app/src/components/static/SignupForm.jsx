@@ -43,7 +43,7 @@ function SignupForm({loginUser, addErrors, clearErrors, errors}) {
   },[])
 
   return (
-    <div>
+    <div className='text-container'>
       <h2 className='header'>Sign up Form</h2>
       <Form onSubmit = {handleSignup}>
         <Form.Group className="ms-5" controlId="formGroupUsername">
@@ -86,7 +86,7 @@ function SignupForm({loginUser, addErrors, clearErrors, errors}) {
             autoComplete = "current-password"
           />
         </Form.Group>
-        <Button type="submit" className='ms-5'>Sign up</Button>
+        <Button type="submit" className='mt-2 ms-5'>Sign up</Button>
       </Form>
       <Errors errors={errors} />
    </div>
