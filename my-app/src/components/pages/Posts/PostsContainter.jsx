@@ -4,24 +4,19 @@ import { useNavigate } from "react-router-dom";
 import Search from "./Search";
 import './post.css'
 
-function PostsContainter(){
-  const [data, setData] = useState([])
+function PostsContainter({saleItems, handleSearch, search}){
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
 
+  
   function showDetails(post_id){
     navigate(`/for_sale_items/${post_id}`)
   }
 
-  useEffect(()=>{
-   fetch('/for_sale_items')
-   .then(r=> r.json())
-   .then((data)=> setData(data))
-  },[])
   
-  const displayItems = data
+  const displayItems = saleItems
   .filter((item)=> 
     item.itemTitle.includes(search.toLowerCase())
+    // and execute this one too!!! ->> item.itemDescription.includes(search.toLowerCase())
   )
   .map((item)=> {
     return(
@@ -32,10 +27,6 @@ function PostsContainter(){
         />
     )
   })
-
-  function handleSearch(newSearch){
-    setSearch(newSearch)
-  }
   
   return (
     <div>
@@ -43,7 +34,6 @@ function PostsContainter(){
       <Search handleSearch={handleSearch} />
       <ul>
         {displayItems}
-        <p>hi</p>
       </ul>
     </div>
   )
