@@ -6,7 +6,7 @@ import './PostCards.scss';
 
 function PostCards({ item, showDetails }){
   // const [favorite, setFavorite] = useState("")
-  const { id, itemTitle, itemDescription, itemPrice } = item
+  const { id, itemTitle, itemDescription, itemPrice, images } = item
 
   // function handleFavorite(e){
   //   e.preventDefault();
@@ -18,7 +18,7 @@ function PostCards({ item, showDetails }){
   return (
     <div className='cards'>
       <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" src="http://placeimg.com/300/300/animals" />
+        <Card.Img variant="top" src={images} />
         <Card.Body>
           <Card.Title>{itemTitle}</Card.Title>
           <Card.Text>{itemPrice}</Card.Text>
