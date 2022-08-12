@@ -9,11 +9,17 @@ import ErrorPage from "./components/static/ErrorPage";
 import Favorites from "./components/pages/Favorites";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PostDetails from './components/pages/Posts/PostDetails';
+import EditPost from './components/pages/Posts/EditPost';
+import Contact from './components/static/Contact';
+import About from './components/static/About';
 
 function App() {
   const [currentUser, setCurrentUser] = useState();
   const [loggedin, setLoggedin] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [saleItems, setSaleItems] = useState([]);
+  const [search, setSearch] = useState("");
+
 
   function loginUser(user){
     setCurrentUser(user);
@@ -43,6 +49,34 @@ function App() {
   },[])
 
 
+  useEffect(()=>{
+    fetch('/for_sale_items')
+    .then(r=> r.json())
+    .then((data)=> setSaleItems(data))
+   },[])
+
+  function handleUpdate(forSaleItem_id, category_id,itemDescription, itemPrice, itemTitle, images){
+    const copy = [...saleItems];
+    for (const saleItems of copy){
+      if(saleItems.id === forSaleItem_id){
+        saleItems.itemTitle = itemTitle;
+        saleItems.itemPrice = itemPrice;
+        saleItems.itemDescription = itemDescription;
+        saleItems.category_id = category_id;
+        saleItems.images = images;
+      }
+    } 
+    setSaleItems(copy)
+  }
+
+  function handleSearch(newSearch){
+    setSearch(newSearch)
+  }
+
+  function handleNewPost(newPost){
+    setSaleItems([...saleItems, newPost])
+  }
+
   return (
     <Router>
       <MenuNav loggedin={loggedin} logoutUser={logoutUser}/>
@@ -50,7 +84,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Home currentUser={currentUser}/>}
+            element={<Home saleItems={saleItems} setSaleItems={setSaleItems} handleSearch={handleSearch} search={search}/>}
           />
           <Route
             path="/login"
@@ -72,7 +106,7 @@ function App() {
           />
           <Route
             path="/posts"
-            element={<PostInput user={currentUser} />}
+            element={<PostInput user={currentUser} handleNewPost={handleNewPost} />}
           />
           <Route
             path="/favorites"
@@ -80,7 +114,19 @@ function App() {
           />
           <Route
             exact path="/for_sale_items/:forSaleItemId"
-            element={<PostDetails user={currentUser}/>}
+            element={<PostDetails user={currentUser} />}
+          />
+          <Route
+            exact path="/for_sale_items/:forSaleItemId/edit"
+            element={<EditPost handleUpdate={handleUpdate}/>} 
+          />
+           <Route
+            exact path="/contact"
+            element={<Contact />} 
+          />
+           <Route
+            exact path="/about"
+            element={<About />} 
           />
           <Route 
             path="*"
