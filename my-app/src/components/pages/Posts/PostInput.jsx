@@ -4,39 +4,22 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-import PostCards from './PostCards';
 import { storage } from "../../../firebase";
-import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { ref, listAll, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 
-function PostInput({user}) {
+function PostInput({user, handleNewPost}) {
   const [itemTitle, setItemTitle] = useState("");
   const [itemPrice, setItemPrice] = useState("");
   const [itemDescription, setItemDescription] = useState("");
-  const [images, setImages] = useState(null);
+  const [images, setImages] = useState("");
   const [categoryName, setCategoryName] = useState(""); 
   const [chosenCategory, setChosenCategory] = useState("");
   const [favorite, setFavorite] = useState(false)
-  const [imageUrl, setImageUrl] = useState([])
-
-  // const forSaleItemsArray = fetch('/for_sale_items',{
-  //   method: "GET",
-  //   headers: {
-  //     'content-type': 'application/json',
-  //     'accept': 'application/json'
-  //   }
-  //   .then(r =>r.json())
-  //   .then((saleItems)=>)
-  // })
+  const [imageUrl, setImageUrl] = useState("")
 
   useEffect(()=>{
-    fetch('/categories',{
-      method: "GET",
-      headers: {
-        'content-type': 'application/json',
-        'accept': 'application/json'
-      }
-    })
+    fetch('/categories')
     .then((r)=>r.json())
     .then((data)=>setCategoryName(data))
   },[])
@@ -61,7 +44,7 @@ function PostInput({user}) {
       itemTitle: itemTitle,
       itemPrice: itemPrice,
       itemDescription: itemDescription,
-      images: images,
+      images: imageUrl,
     });
     if (itemTitle && images) {
         fetch("/for_sale_items",{
@@ -74,39 +57,52 @@ function PostInput({user}) {
       })
       .then((r)=> r.json())
       .then((data) => {
-        console.log(data)
+        handleNewPost(data);
     })
     setItemTitle('');
     setItemPrice('');
     setItemDescription('');
-    setImages(null);
+    setImages([]);
     setCategoryName('');
   }
   }
   
-  const imageListRef = ref(storage, "images/")
-  function uploadImages(){
-    if (images == null) return;
-    const imageRef = ref(storage,`images/${images.name + v4()}`);
-    uploadBytes(imageRef, images).then((snaphsot)=>{
-      getDownloadURL(snaphsot.ref).then(url =>{
-        setImageUrl((prev)=> [...prev, url])
-      })
-    })
-  }
+  useEffect(() => {
+      const imageListRef = ref(storage, "images/");
+      const imageRef = ref(storage, `images/${images.name + v4()}`);
+      for(const imageUpload of images){
+        uploadBytes(imageRef, imageUpload).then((snapshot)=>{getDownloadURL(snapshot.ref)}).then((url)=>{
+          setImageUrl(url)
+          console.log(url)})
+      }
+    // for(const imageUpload of images){
+    //     uploadBytes(imageRef, imageUpload).then(() => {
+    //         listAll(imageListRef).then((response) => {
+    //             response.items.filter((item) => {
+    //                 if (item.name === imageRef.name) {
+    //                     getDownloadURL(item).then((url) => {
+    //                       const imageUploadArray = []
+    //                       imageUploadArray.push(url)
+    //                       setImageUrl(imageUploadArray);
+    //                       console.log("url:", url)
+    //                       console.log("array:", imageUploadArray)
+    //         });
+    //       }
+    //       return null;
+    //     });
+    //     });
+    //   setImageUrl("");
+    //   });
+    // }
+
+  },[])
   
-    useEffect(()=>{
-      listAll(imageListRef).then((r)=>{
-        r.items.forEach((item)=>{
-          getDownloadURL(item).then((url)=> {
-            setImageUrl((prev)=> [...prev, url])
-          })
-        })
-      })
-    },[])
-  
+function handleImgInput(e){
+  setImages(e.target.files)
+}
+
   return (
-    <div className="new-post">
+    <div className="text-container">
       <h1 className='header'>Add a new posting</h1>
       <Form id="newPostForm" onSubmit={handleSubmitPost}>
         <Form.Group className="ms-5" controlId="formGroupUserId">
@@ -148,7 +144,8 @@ function PostInput({user}) {
               id = "dropdown-category-button" 
               title = {categoryName && categoryName.filter((category) => category.id === chosenCategory
                 )} 
-             onSelect={(e)=>setChosenCategory(e)}>
+             onSelect={(e)=>setChosenCategory(e)}
+            >
               { 
                 categoryName && categoryName.map((cat)=>{
                     return(
@@ -163,7 +160,7 @@ function PostInput({user}) {
               name="images"
               multiple = "multiple"
               accept='image/jpg, image/png'
-              onChange={(e)=>{setImages(e.target.files)}}
+              onChange={handleImgInput}
             />
           <Form.Label>
             <Form.Control 
@@ -173,13 +170,11 @@ function PostInput({user}) {
               />
           </Form.Label>
           </Form.Group>
-          <Button onClick={uploadImages} type='submit' className='ms-5 mt-2'>Submit</Button>
-          {imageUrl.map((url, index)=>{
+          <Button  type='submit' className='ms-5 mt-2'>Submit</Button>
+          {/* {imageUrl.map((url, index)=>{
             return <img src={url} key ={index} />
-          })}
+          })} */}
       </Form>
-      <h3>My Selling List:</h3>
-      {/* {ownItemsArray} */}
     </div>
   )
 }
