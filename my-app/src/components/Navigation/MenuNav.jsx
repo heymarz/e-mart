@@ -33,7 +33,7 @@ function MenuNav ({loggedin, logoutUser}) {
      <div>
         <Nav.Link href="/"><BiHomeAlt />Home</Nav.Link>
         <Nav.Link href='/favorites'><FaStar />Favorites</Nav.Link>
-        <Nav.Link href="#!" onClick={handleLogout}><GrLogout />Log out</Nav.Link>
+        <Nav.Link href="/login" onClick={handleLogout}><GrLogout />Log out</Nav.Link>
         <Nav.Link href='/posts'><GrAddCircle />New Post</Nav.Link>
       </div>
     )
