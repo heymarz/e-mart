@@ -12,11 +12,11 @@ function PostInput({user, handleNewPost}) {
   const [itemTitle, setItemTitle] = useState("");
   const [itemPrice, setItemPrice] = useState("");
   const [itemDescription, setItemDescription] = useState("");
-  const [images, setImages] = useState("");
+  const [images, setImages] = useState(null);
   const [categoryName, setCategoryName] = useState(""); 
   const [chosenCategory, setChosenCategory] = useState("");
   const [favorite, setFavorite] = useState(false)
-  const [imageUrl, setImageUrl] = useState("")
+  const [imageUrl, setImageUrl] = useState(null)
 
   useEffect(()=>{
     fetch('/categories')
@@ -35,6 +35,7 @@ function PostInput({user, handleNewPost}) {
   //       />
   //     )
   //   })
+  
 
   function handleSubmitPost(e){
     e.preventDefault();
@@ -62,40 +63,39 @@ function PostInput({user, handleNewPost}) {
     setItemTitle('');
     setItemPrice('');
     setItemDescription('');
-    setImages([]);
+    setImages(null);
     setCategoryName('');
   }
   }
-  
-  useEffect(() => {
-      const imageListRef = ref(storage, "images/");
-      const imageRef = ref(storage, `images/${images.name + v4()}`);
-      for(const imageUpload of images){
-        uploadBytes(imageRef, imageUpload).then((snapshot)=>{getDownloadURL(snapshot.ref)}).then((url)=>{
-          setImageUrl(url)
-          console.log(url)})
-      }
-    // for(const imageUpload of images){
-    //     uploadBytes(imageRef, imageUpload).then(() => {
-    //         listAll(imageListRef).then((response) => {
-    //             response.items.filter((item) => {
-    //                 if (item.name === imageRef.name) {
-    //                     getDownloadURL(item).then((url) => {
-    //                       const imageUploadArray = []
-    //                       imageUploadArray.push(url)
-    //                       setImageUrl(imageUploadArray);
-    //                       console.log("url:", url)
-    //                       console.log("array:", imageUploadArray)
-    //         });
-    //       }
-    //       return null;
-    //     });
-    //     });
-    //   setImageUrl("");
-    //   });
-    // }
 
-  },[])
+  
+  function handleUrl(){
+    const imageListRef = ref(storage, "images/");
+    const imageUploadArray = []
+    console.log("images:", images)
+    for(const imageUpload of images){
+       const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+        uploadBytes(imageRef, imageUpload).then(() => {
+            listAll(imageListRef).then((response) => {
+                response.items.filter((item) => {
+                    if (item.name === imageRef.name) {
+                        getDownloadURL(item).then((url) => {
+                          imageUploadArray.push(url)
+                          
+                          const joinArray = imageUploadArray.join(', ' )
+                          // need to make array into a string so it is accepted in db
+                          setImageUrl(joinArray);
+                          console.log("url:", url)
+                          console.log("array:", imageUploadArray)
+                        });
+                      }
+                      return null;
+                    });
+                  });
+      });
+    }}
+
+
   
 function handleImgInput(e){
   setImages(e.target.files)
@@ -170,7 +170,7 @@ function handleImgInput(e){
               />
           </Form.Label>
           </Form.Group>
-          <Button  type='submit' className='ms-5 mt-2'>Submit</Button>
+          <Button onClick={handleUrl} type='submit' className='ms-5 mt-2'>Submit</Button>
           {/* {imageUrl.map((url, index)=>{
             return <img src={url} key ={index} />
           })} */}
