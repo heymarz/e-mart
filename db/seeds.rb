@@ -9,9 +9,9 @@ Category.create(categoryName: "Household Applicances");
 Category.create(categoryName: "Funiture");
 Category.create(categoryName: "Computer & Accessories");
 
-roger.forSaleItems.create(itemTitle: "Fold out Wood Dining table", category_id: 1, itemDescription: "Great condition. Table is round with a diameter of 36\".", itemPrice: 75, images_id: 1);
+image = "https://placeimg.com/300/300/animals"
 
-Image.create(name: "https://placeimg.com/300/300/animals", for_sale_item_id: 1);
+roger.forSaleItems.create(itemTitle: "Fold out Wood Dining table", category_id: 1, itemDescription: "Great condition. Table is round with a diameter of 36\".", itemPrice: 75, images: image);
 
 roger.forSaleItems.create(itemTitle: "Beautiful black wood stained Dining Table Set", category_id: 1, itemDescription: "Excellent Condition. Table is being sold as a set with the chairs.", itemPrice: 150);
 
