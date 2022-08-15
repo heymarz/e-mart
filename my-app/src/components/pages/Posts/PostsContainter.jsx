@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PostCards from './PostCards';
 import { useNavigate } from "react-router-dom";
 import Search from "./Search";
@@ -6,13 +6,11 @@ import './post.css'
 
 function PostsContainter({saleItems, handleSearch, search}){
   const navigate = useNavigate();
-
   
   function showDetails(post_id){
     navigate(`/for_sale_items/${post_id}`)
   }
 
-  
   const displayItems = saleItems
   .filter((item)=> 
     item.itemTitle.includes(search.toLowerCase())
