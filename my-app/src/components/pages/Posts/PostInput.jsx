@@ -16,26 +16,12 @@ function PostInput({user, handleNewPost}) {
   const [categoryName, setCategoryName] = useState(""); 
   const [chosenCategory, setChosenCategory] = useState("");
   const [favorite, setFavorite] = useState(false)
-  const [imageUrl, setImageUrl] = useState(null)
 
   useEffect(()=>{
     fetch('/categories')
     .then((r)=>r.json())
     .then((data)=>setCategoryName(data))
-  },[])
-  
-  // const ownItemsArray = user && selectAllPosts
-  // .filter((item)=>{
-  //   return user.id === item.user_id})
-  // .map((item)=> {
-  //     return(
-  //       <PostCards 
-  //         key={item.id} 
-  //         item={item}
-  //       />
-  //     )
-  //   })
-  
+  },[])  
 
   function handleSubmitPost(e){
     e.preventDefault();
@@ -45,7 +31,7 @@ function PostInput({user, handleNewPost}) {
       itemTitle: itemTitle,
       itemPrice: itemPrice,
       itemDescription: itemDescription,
-      images: imageUrl,
+      images: images,
     });
     if (itemTitle && images) {
         fetch("/for_sale_items",{
@@ -65,15 +51,15 @@ function PostInput({user, handleNewPost}) {
     setItemDescription('');
     setImages(null);
     setCategoryName('');
+    alert("Post Added")
   }
   }
 
   
-  function handleUrl(){
+  function handleImgInput(e){
     const imageListRef = ref(storage, "images/");
     const imageUploadArray = []
-    console.log("images:", images)
-    for(const imageUpload of images){
+    for(const imageUpload of e.target.files){
        const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
         uploadBytes(imageRef, imageUpload).then(() => {
             listAll(imageListRef).then((response) => {
@@ -81,12 +67,8 @@ function PostInput({user, handleNewPost}) {
                     if (item.name === imageRef.name) {
                         getDownloadURL(item).then((url) => {
                           imageUploadArray.push(url)
-                          
                           const joinArray = imageUploadArray.join(', ' )
-                          // need to make array into a string so it is accepted in db
-                          setImageUrl(joinArray);
-                          console.log("url:", url)
-                          console.log("array:", imageUploadArray)
+                          setImages(joinArray);
                         });
                       }
                       return null;
@@ -94,12 +76,6 @@ function PostInput({user, handleNewPost}) {
                   });
       });
     }}
-
-
-  
-function handleImgInput(e){
-  setImages(e.target.files)
-}
 
   return (
     <div className="text-container">
@@ -170,10 +146,7 @@ function handleImgInput(e){
               />
           </Form.Label>
           </Form.Group>
-          <Button onClick={handleUrl} type='submit' className='ms-5 mt-2'>Submit</Button>
-          {/* {imageUrl.map((url, index)=>{
-            return <img src={url} key ={index} />
-          })} */}
+          <Button type='submit' className='ms-5 mt-2'>Submit</Button>
       </Form>
     </div>
   )
