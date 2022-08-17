@@ -11,7 +11,9 @@ function PostsContainter({saleItems, handleSearch, search}){
     navigate(`/for_sale_items/${post_id}`)
   }
 
-  const displayItems = saleItems
+  function displayItems(){
+    if (saleItems){
+      return saleItems
   .filter((item)=> 
     item.itemTitle.includes(search.toLowerCase())
     // and execute this one too!!! ->> item.itemDescription.includes(search.toLowerCase())
@@ -25,13 +27,14 @@ function PostsContainter({saleItems, handleSearch, search}){
         />
     )
   })
-  
+}
+  }
   return (
     <div>
       <h1 className='container'>For Sale Items</h1>
       <Search handleSearch={handleSearch} />
       <ul>
-        {displayItems}
+        {displayItems()}
       </ul>
     </div>
   )
