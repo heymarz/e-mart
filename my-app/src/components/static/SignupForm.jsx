@@ -47,7 +47,7 @@ function SignupForm({loginUser, addErrors, clearErrors, errors}) {
       <h2 className='header'>Sign up Form</h2>
       <Form onSubmit = {handleSignup}>
         <Form.Group className="ms-5" controlId="formGroupUsername">
-          <Form.Label htmlFor="usename">Username: </Form.Label>
+          <Form.Label >Username: </Form.Label>
           <Form.Control 
             type = "text"
             autoComplete='off'
@@ -57,7 +57,7 @@ function SignupForm({loginUser, addErrors, clearErrors, errors}) {
           />
         </Form.Group>
         <Form.Group className="ms-5" controlId="formGroupEmail">
-          <Form.Label htmlFor="email">Email: </Form.Label>
+          <Form.Label>Email: </Form.Label>
           <Form.Control 
             type = "email"
             autoComplete='off'
@@ -66,8 +66,8 @@ function SignupForm({loginUser, addErrors, clearErrors, errors}) {
             onChange = {(e)=>setEmail(e.target.value)}
           />
         </Form.Group>
-        <Form.Group className="ms-5" controlId="formGroupPassword">
-        <Form.Label htmlFor = "password">Password: </Form.Label>
+        <Form.Group className="ms-5" controlId="formPassword">
+        <Form.Label>Password: </Form.Label>
         <Form.Control
           type = "password"
           value = {password}
@@ -76,8 +76,8 @@ function SignupForm({loginUser, addErrors, clearErrors, errors}) {
           autoComplete = "current-password"
         />
         </Form.Group>
-        <Form.Group className="ms-5" controlId="formGroupPassword">
-          <Form.Label htmlFor="password">Password Confirmation: </Form.Label>
+        <Form.Group className="ms-5" controlId="formPasswordConfirmation">
+          <Form.Label>Password Confirmation: </Form.Label>
           <Form.Control
             type = "password"
             placeholder= "Re-enter Password"
