@@ -7,7 +7,7 @@ class User < ApplicationRecord
   validate :valid_email?
 
   has_many :forSaleItems
-  
+ 
   def valid_email? 
       errors.add(:email, "invalid") unless
       self.email.match(/[\w\d._%+-]+@[\w\d.-]+\.[\w]{2,4}/)

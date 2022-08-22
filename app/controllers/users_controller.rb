@@ -1,11 +1,12 @@
+require 'pry'
 class UsersController < ApplicationController
   skip_before_action :authorize, only: [:create]
 
   def create
     @user = User.create(user_params)
       session[:user_id] = @user.id
-      if @user.valid?
-        UserMailer.welcome_email(@user)
+      if @user.save
+        UserMailer.with(user:@user).welcome_email.deliver_now
         render json: @user, status: :created
       else
         render json: { error: @user.errors.full_messages.join(", ") }, status: :unprocessable_entity
@@ -22,7 +23,7 @@ class UsersController < ApplicationController
     end
   end
 
-  private
+  # private
   def user_params
     params.require(:user).permit(:username, :email, :password, :password_confirmation)
   end
