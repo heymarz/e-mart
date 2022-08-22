@@ -1,19 +1,26 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import DataContext from '../../../DataContext';
 import {useNavigate} from "react-router-dom";
 import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/esm/DropdownButton';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
-import Button from 'react-bootstrap/Button';
+import { storage } from "../../../firebase";
+import { ref, listAll, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
 
-function EditPost({ editPost, setIsEditing, handleUpdate }) {
+function EditPost({ editPost, setIsEditing }) {
   const { itemTitle, itemPrice, itemDescription, images, category_id, id } = editPost;
   const [postTitle, setpostTitle] = useState(itemTitle);
   const [price, setPrice] = useState(itemPrice)
   const [description, setDescription] = useState(itemDescription);
-  const [imagesList, setImagesList] = useState(images);
-  const [categoryName, setCategoryName] = useState("");
+  const [categoryName, setCategoryName] = useState({});
   const [chosenCategory, setChosenCategory] = useState(category_id);
+  const {handleUpdate} = useContext(DataContext)
   const navigate = useNavigate();
+  //images need to be split then placed in state
+  const imageArray = images.split(", ")
+  const [imagesList, setImagesList] = useState(imageArray);
 
   useEffect(()=>{
     fetch('/categories')
@@ -47,6 +54,27 @@ function EditPost({ editPost, setIsEditing, handleUpdate }) {
       navigate(-1)
   })
   }
+
+  function handleImgInput(e){
+    const imageListRef = ref(storage, "images/");
+    const imageUploadArray = []
+    for(const imageUpload of e.target.files){
+       const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+        uploadBytes(imageRef, imageUpload).then(() => {
+            listAll(imageListRef).then((response) => {
+                response.items.filter((item) => {
+                    if (item.name === imageRef.name) {
+                        getDownloadURL(item).then((url) => {
+                          imageUploadArray.push(url)
+                          const joinArray = imageUploadArray.join(', ' )
+                          setImagesList(joinArray);
+                        });
+                      }
+                      return null;
+                    });
+                  });
+      });
+    }}
 
   return (
     <Form id="newPostForm" onSubmit={handleUpdatePost}>
@@ -87,7 +115,7 @@ function EditPost({ editPost, setIsEditing, handleUpdate }) {
             <DropdownButton 
               className = "ms-5 mt-3"
               id = "dropdown-category-button" 
-              title = {chosenCategory && categoryName.filter((category) => category.id === chosenCategory
+              title = {categoryName && categoryName.filter((category) => category.id === chosenCategory
                 )} 
              onSelect={(e)=>setChosenCategory(e)}
              >
@@ -105,7 +133,7 @@ function EditPost({ editPost, setIsEditing, handleUpdate }) {
               name="images"
               multiple = "multiple"
               accept='image/jpg, image/png'
-              onChange={(e)=>setImagesList(e.target.files)}
+              onChange={handleImgInput}
             />
           <Form.Label html="favorite">
             <Form.Control 
