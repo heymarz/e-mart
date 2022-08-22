@@ -1,9 +1,22 @@
 .cards{
-  width: 32%;
   margin-bottom: 2%;
-  position: relative;
+  float: left;
+  flex-direction: column;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  column-gap: 2em;
 }
 .container{
   display: flex;
   flex-wrap: wrap;
+}
+.green{
+  color: greenyellow;
+  font-weight: 600;
+  text-shadow: 1px 1px 0px black;
+}
+.scriptHeader{
+  font-style: italic;
+  color:burlywood;
+  text-shadow: 1px 1px 1px orangered;
 }

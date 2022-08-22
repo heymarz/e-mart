@@ -10,7 +10,7 @@ function PostCards({ item, showDetails }){
 
   // function handleFavorite(e){
   //   e.preventDefault();
-  //   setFavorite()
+  //   send patch request then setFavorite()
   //   console.log(e)
   // }
   
@@ -21,8 +21,8 @@ function PostCards({ item, showDetails }){
         <Card.Img variant="top" src={images} />
         <Card.Body>
           <Card.Title>{itemTitle}</Card.Title>
-          <Card.Text>{itemPrice}</Card.Text>
-          <Card.Text>{itemDescription}</Card.Text>
+          <Card.Text><span className='green'>$$ </span>{itemPrice}</Card.Text>
+          <span className='scriptHeader'>Notes from the Owner: </span><Card.Text>{itemDescription}</Card.Text>
           {/* <Button onClick={handleFavorite}>Favorite</Button> */}
           <Button onClick={()=>showDetails(id)}>More Info</Button>
         </Card.Body>
