@@ -1,10 +1,10 @@
 import React from 'react';
 import PostsContainer from "./Posts/PostsContainter";
 
-function Home ({saleItems, handleSearch, search}) {
+function Home () {
   return (
     <div>
-      <PostsContainer saleItems={saleItems} handleSearch={handleSearch} search={search}/>
+      <PostsContainer />
     </div>
   )
 }

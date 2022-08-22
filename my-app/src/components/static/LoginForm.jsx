@@ -1,13 +1,15 @@
-import React, {useEffect, useState} from 'react'
-import {headers} from '../../Global'
+import React, {useEffect, useState, useContext} from 'react';
+import DataContext from '../../DataContext';
+import {headers} from '../../Global';
 import Errors from './Errors';
 import { useNavigate } from 'react-router-dom';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-function LoginForm({ loginUser, addErrors, clearErrors, errors }) {
+function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const {loginUser, addErrors, clearErrors, errors} = useContext(DataContext)
   const navigate = useNavigate();
 
   function handleLogin(e){

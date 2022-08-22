@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useContext} from 'react';
+import DataContext from '../../DataContext';
 import {GrCart, GrAddCircle, GrLogout, GrLogin } from 'react-icons/gr';
 import {FaStar} from 'react-icons/fa';
 import {BiHomeAlt} from 'react-icons/bi';
@@ -10,7 +11,8 @@ import Col from "react-bootstrap/Col";
 import Row from 'react-bootstrap/Row';
 import './navbar.css'
 
-function MenuNav ({loggedin, logoutUser}) {
+function MenuNav () {
+const {loggedin, logoutUser} = useContext(DataContext)
 
   function loggedOutLinks(){
     return (

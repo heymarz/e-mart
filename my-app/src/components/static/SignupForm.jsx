@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
+import DataContext from '../../DataContext';
 import { useNavigate } from 'react-router-dom';
 import {headers} from "../../Global";
 import Errors from './Errors';
@@ -6,11 +7,12 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./styles.css"
 
-function SignupForm({loginUser, addErrors, clearErrors, errors}) {
+function SignupForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const {loginUser, addErrors, clearErrors, errors} = useContext(DataContext);
   const navigate = useNavigate();
 
   function handleSignup(e){

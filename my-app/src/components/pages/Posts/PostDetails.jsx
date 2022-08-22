@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react';
+import DataContext from '../../../DataContext';
 import { BsFillTrashFill } from "react-icons/bs";
 import { useParams, useNavigate } from 'react-router-dom';
 import EditPost from './EditPost';
@@ -7,11 +8,12 @@ import Button from 'react-bootstrap/Button';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 
-function PostDetails({user, onUpdatePost}){
+function PostDetails(){
   let {forSaleItemId} = useParams();
-  const [currentForSaleItems, setCurrentForSaleItems] = useState({});
-  const { itemTitle, itemPrice, itemDescription, category_id } = currentForSaleItems
+  const [currentForSaleItems, setCurrentForSaleItems] = useState({user: {}});
+  const { itemTitle, itemPrice, itemDescription, user } = currentForSaleItems
   const [isEditing, setIsEditing] = useState(false);
+  const {currentUser} = useContext(DataContext)
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -33,20 +35,16 @@ function PostDetails({user, onUpdatePost}){
     if(currentForSaleItems.images){
       const imgs = currentForSaleItems.images.split(", ");
       const displayImgs = imgs.map((img, index)=>{
-    return (
-      <div>
-        <Card.Img src={img} key={index} alt={img}/>
-      </div>
-    )
+    return (<Card.Img className="images" src={img} key={index} alt={img}/>)
   });
     return displayImgs
     }else{
-      return null
+      return (<p>image Error</p>)
     }
   }
 
   function renderContact(){
-    if(currentForSaleItems.user === user){
+    if(currentUser === user){
       return (<div>
         <Button onClick={()=>setIsEditing(currentForSaleItems)}>Edit</Button>
         <Button variant="outline-info" size="sm" onClick={()=>{handleDelete(forSaleItemId)}}>
@@ -63,14 +61,16 @@ function PostDetails({user, onUpdatePost}){
 
   return (
     <div className='text-container'>
-      {isEditing ? (<EditPost editPost={isEditing} setIsEditing={setIsEditing} onUpdatePost={onUpdatePost} currentForSaleItems={currentForSaleItems}/>) : (<div>
-      <h1>{itemTitle}</h1>
-      <Carousel>
-        {renderImgs()}
-      </Carousel>
-      <Card.Text>$${itemPrice}</Card.Text>
-      <Card.Text>{category_id}<br/>{itemDescription}</Card.Text>
-      {renderContact()}</div>)}
+      {isEditing ? (<EditPost editPost={isEditing} setIsEditing={setIsEditing} currentForSaleItems={currentForSaleItems}/>) : (<div>
+          <h1>{itemTitle}</h1>
+          <Carousel>
+            {renderImgs()}
+          </Carousel>
+          <Card.Text>Asking Price:<span className='green'> $ </span>{itemPrice}</Card.Text>
+          <Card.Text><span className='scriptHeader'>Owner Comments: </span><span className='commentBox'>{itemDescription}</span></Card.Text>
+          {renderContact()}
+        </div>
+        )}
       </div>
       
   )

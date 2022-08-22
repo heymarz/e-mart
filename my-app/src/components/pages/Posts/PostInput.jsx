@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import "./post.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -7,15 +7,18 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { storage } from "../../../firebase";
 import { ref, listAll, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
+import DataContext from '../../../DataContext';
 
-function PostInput({user, handleNewPost}) {
+function PostInput() {
   const [itemTitle, setItemTitle] = useState("");
   const [itemPrice, setItemPrice] = useState("");
   const [itemDescription, setItemDescription] = useState("");
   const [images, setImages] = useState(null);
   const [categoryName, setCategoryName] = useState(""); 
   const [chosenCategory, setChosenCategory] = useState("");
-  const [favorite, setFavorite] = useState(false)
+  const [favorite, setFavorite] = useState(false);
+  const { currentUser, handleNewPost } = useContext(DataContext);
+
 
   useEffect(()=>{
     fetch('/categories')
@@ -26,7 +29,7 @@ function PostInput({user, handleNewPost}) {
   function handleSubmitPost(e){
     e.preventDefault();
     const formData = ({ 
-      user_id: user.id,
+      user_id: currentUser,
       category_id: chosenCategory,
       itemTitle: itemTitle,
       itemPrice: itemPrice,
@@ -82,11 +85,11 @@ function PostInput({user, handleNewPost}) {
       <h1 className='header'>Add a new posting</h1>
       <Form id="newPostForm" onSubmit={handleSubmitPost}>
         <Form.Group className="ms-5" controlId="formGroupUserId">
-          <Form.Control 
+          {/* <Form.Control 
             type="hidden"
             name="userId"
-            value="user.id"
-          />
+            value={user}
+          /> */}
         </Form.Group>
         <Form.Group className="ms-5" controlId="formGroupPostTitle">
           <Form.Label>Post Title: </Form.Label>
@@ -141,8 +144,8 @@ function PostInput({user, handleNewPost}) {
           <Form.Label>
             <Form.Control 
               type="hidden" 
-              value="false"
-              ref={x => {setFavorite(false)}}
+              value="true"
+              // ref={x => {setFavorite(false)}}
               />
           </Form.Label>
           </Form.Group>
