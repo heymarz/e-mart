@@ -8,6 +8,6 @@ Rails.application.routes.draw do
   get '/categories', to: 'categories#index'
   get '/images', to: 'images#index'
 
-  root "for_sale_item#index"
+  root "welcome#index"
   resources :for_sale_items
 end
