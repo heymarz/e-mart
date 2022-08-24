@@ -1,4 +1,3 @@
-require "pry"
 class ForSaleItemsController < ApplicationController
 
   before_action :set_for_sale_item, only: %i[ show edit update destroy ]
@@ -14,12 +13,6 @@ class ForSaleItemsController < ApplicationController
     render json: @for_sale_item
   end
 
-  # GET /for_sale_items/new
-  def new
-    @for_sale_item = ForSaleItem.new
-    render json: @for_sale_item
-  end
-
   # GET /for_sale_items/1/edit
   def edit
   end
@@ -32,14 +25,11 @@ class ForSaleItemsController < ApplicationController
 
   # PATCH/PUT /for_sale_items/1 or /for_sale_items/1.json
   def update
-    respond_to do |format|
-      if @for_sale_item.update(for_sale_item_params)
-        format.html { redirect_to for_sale_item_url(@for_sale_item), notice: "For sale item was successfully updated." }
-        format.json { render :show, status: :ok, location: @for_sale_item }
+    if @for_sale_item
+      @for_sale_item.update(for_sale_item_params)
+        render json: @for_sale_item, status: :accepted
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @for_sale_item.errors, status: :unprocessable_entity }
-      end
+        render json: :edit, status: :unprocessable_entity
     end
   end
 
@@ -57,7 +47,6 @@ class ForSaleItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def for_sale_item_params
-      binding.pry
       params.require(:for_sale_item).permit(:id, :itemTitle, :category_id, :itemDescription, :itemPrice, :user_id, :images)
     end
 

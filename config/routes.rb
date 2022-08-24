@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   get '/images', to: 'images#index'
 
   root "welcome#index"
-  resources :for_sale_items
+  resources :for_sale_items, except: [:new]
 end
