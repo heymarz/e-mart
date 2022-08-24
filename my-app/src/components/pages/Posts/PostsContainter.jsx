@@ -13,7 +13,7 @@ function PostsContainter(){
     navigate(`/for_sale_items/${post_id}`)
   }
   
-  const displayItems = saleItems && saleItems
+  const displayItems = saleItems
   .filter((item)=> 
     item.itemTitle.includes(search.toLowerCase())
     // and execute this one too!!! ->> item.itemDescription.includes(search.toLowerCase())
