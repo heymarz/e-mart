@@ -3,6 +3,7 @@ import DataContext from '../../../DataContext';
 import {useNavigate} from "react-router-dom";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 import DropdownButton from 'react-bootstrap/esm/DropdownButton';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 import { storage } from "../../../firebase";
@@ -18,7 +19,7 @@ function EditPost({ editPost, setIsEditing }) {
   const [chosenCategory, setChosenCategory] = useState(category_id);
   const {handleUpdate} = useContext(DataContext)
   const navigate = useNavigate();
-  //images need to be split then placed in state
+ 
   const imageArray = images.split(", ")
   const [imagesList, setImagesList] = useState(imageArray);
 
@@ -34,10 +35,10 @@ function EditPost({ editPost, setIsEditing }) {
       itemTitle: postTitle,
       itemPrice: price,
       itemDescription: description,
-      images: imagesList,
+      images: imagesList.toString(),
       category_id: chosenCategory
   })
-  console.log(formData)
+ 
     fetch(`/for_sale_items/${id}`, {
       method: "PATCH",
       headers: {
@@ -48,7 +49,6 @@ function EditPost({ editPost, setIsEditing }) {
     })
     .then((r)=>r.json())
     .then((currentPost)=>{
-      console.log(currentPost)
       handleUpdate(currentPost.id, category_id, currentPost.itemDescription, currentPost.itemPrice, currentPost.images, currentPost.itemTitle);
       setIsEditing(false)
       navigate(-1)
@@ -75,6 +75,17 @@ function EditPost({ editPost, setIsEditing }) {
                   });
       });
     }}
+
+    function renderImgs(){
+      if(imageArray){
+        const displayImgs = imageArray.map((img, index)=>{
+          return (<img className="thumbnail" src={img} key={index} alt={img}/>)
+        });
+        return displayImgs
+      }else{
+        return (<p>image Error</p>)
+      }
+    }
 
   return (
     <Form id="newPostForm" onSubmit={handleUpdatePost}>
@@ -112,9 +123,9 @@ function EditPost({ editPost, setIsEditing }) {
             onChange={(e)=>setDescription(e.target.value)}
           />
         </Form.Group>
-            <DropdownButton 
+            {/* <DropdownButton 
               className = "ms-5 mt-3"
-              id = "dropdown-category-button" 
+              id = "dropdown-category-btn" 
               title = {categoryName && categoryName.filter((category) => category.id === chosenCategory
                 )} 
              onSelect={(e)=>setChosenCategory(e)}
@@ -126,7 +137,7 @@ function EditPost({ editPost, setIsEditing }) {
                     )
                   })
               }
-            </DropdownButton>
+            </DropdownButton> */}
           <Form.Group className="ms-5 mt-3" controlId="formGroupImages">
             <Form.Control 
               type="file"
@@ -135,6 +146,7 @@ function EditPost({ editPost, setIsEditing }) {
               accept='image/jpg, image/png'
               onChange={handleImgInput}
             />
+            {renderImgs()}
           <Form.Label html="favorite">
             <Form.Control 
             type="hidden" 

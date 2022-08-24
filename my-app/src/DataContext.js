@@ -65,7 +65,7 @@ export const DataProvider = ({ children }) =>{
   }
   return (
     <DataContext.Provider value = {{
-      loggedin, logoutUser, currentUser,saleItems, setSaleItems, handleSearch, search, loginUser, addErrors, clearErrors, errors, handleNewPost, handleUpdate
+      loggedin, logoutUser, currentUser, saleItems, setSaleItems, handleSearch, search, loginUser, addErrors, clearErrors, errors, handleNewPost, handleUpdate
     }}>
       {children}
       </DataContext.Provider>
