@@ -12,7 +12,7 @@ function PostDetails(){
   const {forSaleItemId} = useParams();
   const {currentUser} = useContext(DataContext)
   const [currentForSaleItems, setCurrentForSaleItems] = useState({user: {}, images: ""});
-  const { itemTitle, itemPrice, itemDescription, user_id, user } = currentForSaleItems
+  const { itemTitle, itemPrice, itemDescription, user_id } = currentForSaleItems
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
 console.log(useContext(DataContext))
