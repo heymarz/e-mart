@@ -15,7 +15,7 @@ function PostDetails(){
   const { itemTitle, itemPrice, itemDescription, user_id } = currentForSaleItems
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
-console.log(useContext(DataContext))
+
   useEffect(()=>{
     fetch(`/for_sale_items/${forSaleItemId}`)
     .then((r)=>r.json())
