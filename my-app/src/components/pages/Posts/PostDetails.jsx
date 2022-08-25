@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
+import DataContext from '../../../DataContext';
 import { BsFillTrashFill } from "react-icons/bs";
 import { useNavigate, useParams } from 'react-router-dom';
 import EditPost from './EditPost';
@@ -9,11 +10,12 @@ import { Carousel } from 'react-responsive-carousel';
 
 function PostDetails(){
   const {forSaleItemId} = useParams();
+  const {currentUser} = useContext(DataContext)
   const [currentForSaleItems, setCurrentForSaleItems] = useState({user: {}, images: ""});
   const { itemTitle, itemPrice, itemDescription, user_id, user } = currentForSaleItems
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
-
+console.log(useContext(DataContext))
   useEffect(()=>{
     fetch(`/for_sale_items/${forSaleItemId}`)
     .then((r)=>r.json())
@@ -33,18 +35,19 @@ function PostDetails(){
   }
   
   function renderContact(){
-    if(user.id === user_id){
-      return (<div>
-        <Button onClick={()=>setIsEditing(currentForSaleItems)}>Edit</Button>
-        <Button variant="outline-info" size="sm" onClick={()=>{handleDelete(forSaleItemId)}}> 
-            <BsFillTrashFill />
-        </Button> 
-      </div>
-      )
-    }
-    else{
-      return (<div><a href={`mailto:${currentForSaleItems.user.email}?subject=${currentForSaleItems.itemTitle}`}>Click here to contact Seller</a></div>)
-    }
+    if(currentUser)
+      {if(currentUser.id === user_id){
+        return (<div>
+          <Button onClick={()=>setIsEditing(currentForSaleItems)}>Edit</Button>
+          <Button variant="outline-info" size="sm" onClick={()=>{handleDelete(forSaleItemId)}}> 
+              <BsFillTrashFill />
+          </Button> 
+          </div>
+        )
+      }
+      else{
+        return (<div><a href={`mailto:${currentForSaleItems.user.email}?subject=${currentForSaleItems.itemTitle}`}>Click here to contact Seller</a></div>)
+      }}
   }
 
   return (
