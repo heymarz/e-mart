@@ -33,7 +33,7 @@ export const DataProvider = ({ children }) =>{
         loginUser(user);})
       }
     })
-  },[setCurrentUser])
+  },[])
 
 
   useEffect(()=>{
