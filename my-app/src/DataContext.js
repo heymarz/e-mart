@@ -39,7 +39,11 @@ export const DataProvider = ({ children }) =>{
   useEffect(()=>{
     fetch('/for_sale_items')
     .then(r=> r.json())
-    .then((data)=> setSaleItems(data))
+    .then((data)=> {
+      if(data.id){
+        setSaleItems(data)
+      }
+    })
    },[])
 
   function handleUpdate(forSaleItem_id, category_id,itemDescription, itemPrice, itemTitle, images){
