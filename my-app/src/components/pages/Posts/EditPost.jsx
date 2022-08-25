@@ -3,9 +3,6 @@ import DataContext from '../../../DataContext';
 import {useNavigate} from "react-router-dom";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import DropdownButton from 'react-bootstrap/esm/DropdownButton';
-import Dropdown from 'react-bootstrap/esm/Dropdown';
 import { storage } from "../../../firebase";
 import { ref, listAll, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
@@ -15,11 +12,10 @@ function EditPost({ editPost, setIsEditing }) {
   const [postTitle, setpostTitle] = useState(itemTitle);
   const [price, setPrice] = useState(itemPrice)
   const [description, setDescription] = useState(itemDescription);
-  const [categoryName, setCategoryName] = useState({});
+  const [categoryName, setCategoryName] = useState("");
   const [chosenCategory, setChosenCategory] = useState(category_id);
   const {handleUpdate} = useContext(DataContext)
   const navigate = useNavigate();
- 
   const imageArray = images.split(", ")
   const [imagesList, setImagesList] = useState(imageArray);
 
@@ -123,21 +119,21 @@ function EditPost({ editPost, setIsEditing }) {
             onChange={(e)=>setDescription(e.target.value)}
           />
         </Form.Group>
-            {/* <DropdownButton 
+        <label className = "ms-5 mt-3">Please Choose a category</label>
+            <select 
               className = "ms-5 mt-3"
-              id = "dropdown-category-btn" 
-              title = {categoryName && categoryName.filter((category) => category.id === chosenCategory
-                )} 
-             onSelect={(e)=>setChosenCategory(e)}
+              id = "mySelect" 
+              value={chosenCategory ? chosenCategory : chosenCategory===categoryName.id}
+              onChange={(e)=>{setChosenCategory(e.target.value)}}
              >
               { 
                 categoryName && categoryName.map((cat)=>{
                     return(
-                      <Dropdown.Item eventKey={cat.id} key={cat.categoryName}>{cat.categoryName}</Dropdown.Item>
+                      <option value={cat.id} key={cat.categoryName}>{cat.categoryName}</option>
                     )
                   })
               }
-            </DropdownButton> */}
+            </select>
           <Form.Group className="ms-5 mt-3" controlId="formGroupImages">
             <Form.Control 
               type="file"

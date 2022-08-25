@@ -1,13 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react';
-import "./post.css";
+import DataContext from '../../../DataContext';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
 import { storage } from "../../../firebase";
 import { ref, listAll, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
-import DataContext from '../../../DataContext';
+import "./post.css";
 
 function PostInput() {
   const [itemTitle, setItemTitle] = useState("");
@@ -19,7 +17,6 @@ function PostInput() {
   const [favorite, setFavorite] = useState(false);
   const { currentUser, handleNewPost } = useContext(DataContext);
 
-
   useEffect(()=>{
     fetch('/categories')
     .then((r)=>r.json())
@@ -29,7 +26,7 @@ function PostInput() {
   function handleSubmitPost(e){
     e.preventDefault();
     const formData = ({ 
-      user_id: currentUser,
+      user_id: currentUser.id,
       category_id: chosenCategory,
       itemTitle: itemTitle,
       itemPrice: itemPrice,
@@ -48,16 +45,15 @@ function PostInput() {
       .then((r)=> r.json())
       .then((data) => {
         handleNewPost(data);
-    })
-    setItemTitle('');
-    setItemPrice('');
-    setItemDescription('');
-    setImages(null);
-    setCategoryName('');
-    alert("Post Added")
+      })
+      setItemTitle('');
+      setItemPrice('');
+      setItemDescription('');
+      setImages(null);
+      setCategoryName('');
+      alert("Post Added")
+    }
   }
-  }
-
   
   function handleImgInput(e){
     const imageListRef = ref(storage, "images/");
@@ -85,11 +81,11 @@ function PostInput() {
       <h1 className='header'>Add a new posting</h1>
       <Form id="newPostForm" onSubmit={handleSubmitPost}>
         <Form.Group className="ms-5" controlId="formGroupUserId">
-          {/* <Form.Control 
+          <Form.Control 
             type="hidden"
             name="userId"
-            value={user}
-          /> */}
+            value="currentUser.id"
+          />
         </Form.Group>
         <Form.Group className="ms-5" controlId="formGroupPostTitle">
           <Form.Label>Post Title: </Form.Label>
@@ -118,21 +114,21 @@ function PostInput() {
             onChange={(e)=>setItemDescription(e.target.value)}
           />
         </Form.Group>
-            <DropdownButton 
+        <label className = "ms-5 mt-3">Please Choose a category</label>
+            <select 
               className = "ms-5 mt-3"
-              id = "dropdown-category-button" 
-              title = {categoryName && categoryName.filter((category) => category.id === chosenCategory
-                )} 
-             onSelect={(e)=>setChosenCategory(e)}
-            >
+              id = "dropdown-category-btn" 
+              onChange={(e)=>setChosenCategory(e.target.value)}
+             >
+        
               { 
                 categoryName && categoryName.map((cat)=>{
                     return(
-                      <Dropdown.Item eventKey={cat.id} key={cat.id}>{cat.categoryName}</Dropdown.Item>
+                      <option value={cat.id} key={cat.categoryName}>{cat.categoryName}</option>
                     )
                   })
               }
-            </DropdownButton>
+            </select>
           <Form.Group className="ms-5 mt-3" controlId="formGroupImages">
             <Form.Control 
               type="file"
@@ -141,6 +137,7 @@ function PostInput() {
               accept='image/jpg, image/png'
               onChange={handleImgInput}
             />
+           
           <Form.Label>
             <Form.Control 
               type="hidden" 
