@@ -35,10 +35,6 @@ This will run the rails server on port [http://localhost:4000](http://localhost:
 
 - User can see the purchase of a sale item in order history
 
-- User can create reviews for a sale item
-
-- User can update or delete their review of sale item
-
 
 ## MVP
 
@@ -48,7 +44,7 @@ This will run the rails server on port [http://localhost:4000](http://localhost:
 
 3. Create a new item to sell
 
-4. List a single item on sale and their associated reviews
+4. List a single item on sale and link to the 
 
 5. Modify and delete a review that was posted
 
@@ -75,11 +71,23 @@ I had set up my models' relationship like this:
 
 ``` Item >- Category ```
 
-``` Categories -< subcategories ```
 
 ### Deploying
 
-I had deployed my API to AWS. 
+I had deployed my API to Heroku. 
 
 ### Resources
 
+https://youtu.be/YOAeBSCkArA
+
+https://firebase.google.com/docs?authuser=0&hl=en
+
+https://medium.com/@lushiyun/using-aliasing-associations-for-intuitive-development-reflections-from-a-rails-project-faea6c66f9af
+
+https://www.freecodecamp.org/news/mailto-link-how-to-make-an-html-email-link-example-code/
+
+https://medium.com/@corypavitt/send-welcome-email-to-users-using-ruby-on-rails-back-end-5a0f9f8f136c
+
+https://hixonrails.com/ruby-on-rails-tutorials/ruby-on-rails-action-mailer-configuration/
+
+https://youtu.be/ngVvDegsAW8
