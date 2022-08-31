@@ -10,4 +10,7 @@ Rails.application.routes.draw do
 
   root "welcome#index"
   resources :for_sale_items, except: [:new]
+
+  post '/favorites/for_sale_item/:forSaleItemId', to: 'favorites#create'
+  delete '/favorites/for_sale_item/:forSaleItemId', to: 'favorites#destroy'
 end
