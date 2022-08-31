@@ -14,7 +14,6 @@ function PostInput() {
   const [images, setImages] = useState(null);
   const [categoryName, setCategoryName] = useState(""); 
   const [chosenCategory, setChosenCategory] = useState("");
-  const [favorite, setFavorite] = useState(false);
   const { currentUser, handleNewPost } = useContext(DataContext);
 
   useEffect(()=>{
@@ -137,14 +136,6 @@ function PostInput() {
               accept='image/jpg, image/png'
               onChange={handleImgInput}
             />
-           
-          <Form.Label>
-            <Form.Control 
-              type="hidden" 
-              value="true"
-              // ref={x => {setFavorite(false)}}
-              />
-          </Form.Label>
           </Form.Group>
           <Button type='submit' className='ms-5 mt-2'>Submit</Button>
       </Form>
