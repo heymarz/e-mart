@@ -1,5 +1,4 @@
 class ForSaleItemsController < ApplicationController
-
   before_action :set_for_sale_item, only: %i[ show edit update destroy ]
 
   # GET /for_sale_items or /for_sale_items.json
@@ -20,7 +19,7 @@ class ForSaleItemsController < ApplicationController
   # POST /for_sale_items or /for_sale_items.json
   def create
     @for_sale_item = ForSaleItem.create(for_sale_item_params)
-    return render json: @for_sale_item, status: :created
+    render json: @for_sale_item, status: :created
   end
 
   # PATCH/PUT /for_sale_items/1 or /for_sale_items/1.json
