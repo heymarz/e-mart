@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_29_010827) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_08_180157) do
   create_table "categories", force: :cascade do |t|
     t.string "categoryName"
     t.datetime "created_at", null: false
@@ -18,15 +18,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_29_010827) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "for_sale_item_id", null: false
-    t.index ["for_sale_item_id"], name: "index_favorites_on_for_sale_item_id"
-    t.index ["user_id", "for_sale_item_id"], name: "index_favorites_on_user_id_and_for_sale_item_id", unique: true
-    t.index ["user_id"], name: "index_favorites_on_user_id"
+    t.integer "buyer_id"
+    t.integer "for_sale_item_id"
+    t.index ["buyer_id"], name: "index_favorites_on_buyer_id"
   end
 
   create_table "for_sale_items", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "seller_id"
     t.integer "category_id"
     t.string "images"
     t.string "itemTitle"
@@ -34,6 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_29_010827) do
     t.string "itemDescription"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["seller_id"], name: "index_for_sale_items_on_seller_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -42,6 +41,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_29_010827) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "favorites", "users", column: "buyer_id"
+  add_foreign_key "for_sale_items", "users", column: "seller_id"
 end
