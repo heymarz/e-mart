@@ -1,7 +1,7 @@
 class CreateForSaleItems < ActiveRecord::Migration[7.0]
   def change
     create_table :for_sale_items do |t|
-      t.integer :user_id
+      t.references :seller
       t.integer :category_id
       t.string :images
       t.string :itemTitle
@@ -9,6 +9,7 @@ class CreateForSaleItems < ActiveRecord::Migration[7.0]
       t.string :itemDescription
     
       t.timestamps
-    end
+    end  
+    add_foreign_key "for_sale_items", "users", column: "seller_id"  
   end
 end
