@@ -1,7 +1,7 @@
 class ForSaleItem < ApplicationRecord
-  belongs_to :user
+  belongs_to :seller, class_name: "User"
+  has_many :favorites, :foreign_key => "buyer_id", dependent: :delete_all
   belongs_to :category
-  has_many :favorites
 
   validates :images, presence: true
   validates :itemTitle, :itemDescription, presence: true

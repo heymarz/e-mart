@@ -46,7 +46,7 @@ class ForSaleItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def for_sale_item_params
-      params.require(:for_sale_item).permit(:id, :itemTitle, :category_id, :itemDescription, :itemPrice, :user_id, :images)
+      params.require(:for_sale_item).permit(:id, :itemTitle, :category_id, :itemDescription, :itemPrice, :seller_id, :images)
     end
 
 end
