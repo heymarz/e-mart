@@ -3,7 +3,7 @@ import { createContext, useState, useEffect } from "react";
 const DataContext = createContext(null);
 
 export const DataProvider = ({ children }) =>{
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState({});
   const [loggedin, setLoggedin] = useState(false);
   const [errors, setErrors] = useState([]);
   const [saleItems, setSaleItems] = useState([]);
@@ -25,6 +25,7 @@ export const DataProvider = ({ children }) =>{
   function clearErrors() {
     setErrors([]);
   }
+
   useEffect(()=>{
     fetch("/me")
     .then(res=>{
@@ -35,12 +36,11 @@ export const DataProvider = ({ children }) =>{
     })
   },[])
 
-
   useEffect(()=>{
     fetch('/for_sale_items')
     .then(r=> r.json())
     .then((data)=> {
-      if(data.id){
+      if(data){
         setSaleItems(data)
       }
     })
