@@ -8,13 +8,31 @@ import SignupForm from './components/static/SignupForm';
 import PostInput from './components/pages/Posts/PostInput';
 import ErrorPage from "./components/static/ErrorPage";
 import Favorites from "./components/pages/Favorites";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import PostDetails from './components/pages/Posts/PostDetails';
 import EditPost from './components/pages/Posts/EditPost';
 import Contact from './components/static/Contact';
 import About from './components/static/About';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
+
+  function handleFavorite(forSaleItemId, userId){
+    const formData = {
+      buyer_id: userId, 
+      for_sale_item_id: forSaleItemId
+    };
+      fetch(`/favorites/for_sale_item/${forSaleItemId}`,{
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(r=> r.json())
+      .then(data=> console.log(data))
+    }
+
   return (
     <DataProvider>
       <Router>
@@ -22,7 +40,7 @@ function App() {
         <main>
           <Routes>
             <Route
-              path="/" element={<Home/>}
+              path="/" element={<Home handleFavorite={handleFavorite}/>}
             />
             <Route
               path="/login"
@@ -30,19 +48,19 @@ function App() {
             />
             <Route
               path="/signup"
-              element={<SignupForm/>}
+              element={<SignupForm />}
             />
             <Route
               path="/posts"
-              element={<PostInput/>}
+              element={<PostInput />}
             />
             <Route
               path="/favorites"
-              element={<Favorites/>}
+              element={<Favorites />}
             />
             <Route
               exact path="/for_sale_items/:forSaleItemId"
-              element={<PostDetails/>}
+              element={<PostDetails handleFavorite={handleFavorite}/>}
             />
             <Route
               exact path="/for_sale_items/:forSaleItemId/edit"
