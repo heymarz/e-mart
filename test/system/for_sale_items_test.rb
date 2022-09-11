@@ -20,7 +20,7 @@ class ForSaleItemsTest < ApplicationSystemTestCase
     fill_in "Location", with: @for_sale_item.location
     fill_in "Price", with: @for_sale_item.price
     fill_in "Title", with: @for_sale_item.title
-    fill_in "User", with: @for_sale_item.user_id
+  
     click_on "Create For sale item"
 
     assert_text "For sale item was successfully created"
@@ -37,7 +37,6 @@ class ForSaleItemsTest < ApplicationSystemTestCase
     fill_in "Location", with: @for_sale_item.location
     fill_in "Price", with: @for_sale_item.price
     fill_in "Title", with: @for_sale_item.title
-    fill_in "User", with: @for_sale_item.user_id
     click_on "Update For sale item"
 
     assert_text "For sale item was successfully updated"
