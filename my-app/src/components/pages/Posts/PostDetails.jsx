@@ -8,11 +8,11 @@ import Button from 'react-bootstrap/Button';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
-function PostDetails(){
+function PostDetails({handleFavorite}){
   const {forSaleItemId} = useParams();
   const {currentUser} = useContext(DataContext)
   const [currentForSaleItems, setCurrentForSaleItems] = useState({user: {}, images: ""});
-  const { itemTitle, itemPrice, itemDescription, user_id } = currentForSaleItems
+  const {id, itemTitle, itemPrice, itemDescription, seller_id, seller} = currentForSaleItems
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ function PostDetails(){
   
   function renderContact(){
     if(currentUser)
-      {if(currentUser.id === user_id){
+      {if(currentUser.id === seller_id){
         return (<div>
           <Button onClick={()=>setIsEditing(currentForSaleItems)}>Edit</Button>
           <Button variant="outline-info" size="sm" onClick={()=>{handleDelete(forSaleItemId)}}> 
@@ -46,7 +46,11 @@ function PostDetails(){
         )
       }
       else{
-        return (<div><a href={`mailto:${currentForSaleItems.user.email}?subject=${currentForSaleItems.itemTitle}`}>Click here to contact Seller</a></div>)
+        return (
+        <div>
+          <Button onClick={()=>handleFavorite(id, currentUser.id)}>Favorite</Button>
+          {/* <a href={`mailto:${seller.email}?subject=${currentForSaleItems.itemTitle}`}>Click here to contact Seller</a> */}
+        </div>)
       }}
   }
 

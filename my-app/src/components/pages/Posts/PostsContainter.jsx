@@ -5,15 +5,14 @@ import { useNavigate } from "react-router-dom";
 import Search from "./Search";
 import './post.css'
 
-function PostsContainter(){
-  const {saleItems, handleSearch, search} = useContext(DataContext)
+function PostsContainter({handleFavorite}){
+  const {saleItems, handleSearch, search, currentUser} = useContext(DataContext)
   const navigate = useNavigate();
 
   function showDetails(post_id){
     navigate(`/for_sale_items/${post_id}`)
   }
 
-  console.log(useContext(DataContext))
   function items(){
     if(saleItems){
     return saleItems
@@ -27,6 +26,8 @@ function PostsContainter(){
           key={item.id} 
           item={item}
           showDetails = {showDetails}
+          handleFavorite={handleFavorite}
+          buyerId = {currentUser.id}
         />
     )
   })
