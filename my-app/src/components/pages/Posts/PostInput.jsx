@@ -25,7 +25,7 @@ function PostInput() {
   function handleSubmitPost(e){
     e.preventDefault();
     const formData = ({ 
-      user_id: currentUser.id,
+      seller_id: currentUser.id,
       category_id: chosenCategory,
       itemTitle: itemTitle,
       itemPrice: itemPrice,
