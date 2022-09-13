@@ -6,8 +6,8 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validate :valid_email?
   
-  has_many :postedForSaleItems, class_name: "ForSaleItem", foreign_key:  'seller_id'
-  has_many :wishListItems, class_name: "Favorite", foreign_key:  'buyer_id'
+  has_many :favorites, foreign_key: "buyer_id"
+  has_many :for_sale_items, through: :favorites
 
   def valid_email? 
       errors.add(:email, "invalid") unless
