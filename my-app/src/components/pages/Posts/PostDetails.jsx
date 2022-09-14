@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
-function PostDetails({handleFavorite, handleUpdate, isDetails}){
+function PostDetails({handleFavorite, handleUpdate, isDetails, setIsDetails}){
   const {id, itemTitle, images, itemPrice, itemDescription, seller_id, seller} = isDetails
   const {currentUser} = useContext(DataContext)
   const [isEditing, setIsEditing] = useState(false);
@@ -41,13 +41,14 @@ function PostDetails({handleFavorite, handleUpdate, isDetails}){
         <div>
           <Button onClick={()=>handleFavorite(id, currentUser.id)}>Favorite</Button>
           {/* <a href={`mailto:${seller.email}?subject=${itemTitle}`}>Click here to contact Seller</a> */}
+          <Button onClick={()=>setIsDetails(false)}>Minimize</Button>
         </div>)
       }}
   }
 
   return (
     <div className='text-container'>
-      {isEditing ? (<EditPost editPost={isEditing} setIsEditing={setIsEditing} isEditing={isDetails} handleUpdate={handleUpdate} />) : isDetails ? (<div>
+      {isEditing ? (<EditPost editPost={isEditing} setIsEditing={setIsEditing} isEditing={isDetails} handleUpdate={handleUpdate} setIsDetails={setIsDetails} />) : isDetails ? (<div>
           <h1>{itemTitle}</h1>
           <Carousel infiniteLoop showThumbs>
           {imgs.map((img, index)=>{

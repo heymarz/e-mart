@@ -6,7 +6,7 @@ import { storage } from "../../../firebase";
 import { ref, listAll, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 
-function EditPost({ editPost, setIsEditing, handleUpdate }) {
+function EditPost({ editPost, setIsEditing, handleUpdate, setIsDetails }) {
   const { itemTitle, itemPrice, itemDescription, images, category_id, id } = editPost;
   const [postTitle, setpostTitle] = useState(itemTitle);
   const [price, setPrice] = useState(itemPrice)
@@ -45,6 +45,7 @@ function EditPost({ editPost, setIsEditing, handleUpdate }) {
     .then((currentPost)=>{
       handleUpdate(currentPost.id, category_id, currentPost.itemDescription, currentPost.itemPrice, currentPost.images, currentPost.itemTitle);
       setIsEditing(false)
+      setIsDetails(false)
       navigate(0)
   })
   }
