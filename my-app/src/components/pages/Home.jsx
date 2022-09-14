@@ -1,5 +1,5 @@
 import React from 'react';
-import PostsContainer from "./Posts/PostsContainter";
+import PostsContainer from "./Posts/PostsContainer";
 
 function Home ({handleFavorite}) {
   return (
