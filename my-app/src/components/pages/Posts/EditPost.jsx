@@ -1,5 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
-import DataContext from '../../../DataContext';
+import React, {useState, useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
@@ -7,14 +6,13 @@ import { storage } from "../../../firebase";
 import { ref, listAll, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 
-function EditPost({ editPost, setIsEditing }) {
+function EditPost({ editPost, setIsEditing, handleUpdate }) {
   const { itemTitle, itemPrice, itemDescription, images, category_id, id } = editPost;
   const [postTitle, setpostTitle] = useState(itemTitle);
   const [price, setPrice] = useState(itemPrice)
   const [description, setDescription] = useState(itemDescription);
   const [categoryName, setCategoryName] = useState("");
   const [chosenCategory, setChosenCategory] = useState(category_id);
-  const {handleUpdate} = useContext(DataContext)
   const navigate = useNavigate();
   const imageArray = images.split(", ")
   const [imagesList, setImagesList] = useState(imageArray);
@@ -47,7 +45,7 @@ function EditPost({ editPost, setIsEditing }) {
     .then((currentPost)=>{
       handleUpdate(currentPost.id, category_id, currentPost.itemDescription, currentPost.itemPrice, currentPost.images, currentPost.itemTitle);
       setIsEditing(false)
-      navigate(-1)
+      navigate(0)
   })
   }
 
@@ -143,13 +141,6 @@ function EditPost({ editPost, setIsEditing }) {
               onChange={handleImgInput}
             />
             {renderImgs()}
-          <Form.Label html="favorite">
-            <Form.Control 
-            type="hidden" 
-            value="false"
-            // ref={x => {setFavorite(false)}}
-              />
-          </Form.Label>
           </Form.Group>
           <Button type='submit' className='ms-5 mt-2'>Update!</Button>
       </Form>
