@@ -82,14 +82,6 @@ function App() {
               element={<Favorites favorites={favorites}/>}
             />
             <Route
-              exact path="/for_sale_items/:forSaleItemId"
-              element={<PostDetails handleFavorite={handleFavorite} />}
-            />
-            <Route
-              exact path="/for_sale_items/:forSaleItemId/edit"
-              element={<EditPost />} 
-            />
-            <Route
               exact path="/contact"
               element={<Contact />} 
             />
