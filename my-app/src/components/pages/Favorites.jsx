@@ -1,9 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import DataContext from '../../DataContext';
 import PostCards from './Posts/PostCards';
 
-function Favorites(){
-  const [favorites, setFavorites] = useState([])
+function Favorites({favorites}){
   const { saleItems, currentUser } = useContext(DataContext);
 
   function ownSales(){
@@ -21,26 +20,16 @@ function Favorites(){
         }}
 
   function wishList(){
-    if(saleItems){
-      const copy = [...saleItems]
-       const ix = copy.filter((i)=>favorites.for_sale_item_id === i.id)
-      // .map((item,index)=>{
-      //   return(
-      //     <PostCards key={index} item={item} />
-      //   )}
-      // )
-      console.log(saleItems)
-      console.log(favorites)
+    if(favorites){
+      return favorites.map((item,index)=>{
+        return(
+          <PostCards key={index} item={item.for_sale_item} />
+        )}
+      )
     }else{
       return <p>Looks like you are not watching any items yet!</p>
     }
   }
-  
-  useEffect(()=>{
-    fetch('/favorites')
-    .then((r)=>r.json())
-    .then(setFavorites)
-  },[])
         
   return (
     <div>
