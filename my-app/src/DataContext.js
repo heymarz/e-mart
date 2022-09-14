@@ -46,20 +46,6 @@ export const DataProvider = ({ children }) =>{
     })
    },[])
 
-  function handleUpdate(forSaleItem_id, category_id,itemDescription, itemPrice, itemTitle, images){
-    const copy = [...saleItems];
-    for (const saleItems of copy){
-      if(saleItems.id === forSaleItem_id){
-        saleItems.itemTitle = itemTitle;
-        saleItems.itemPrice = itemPrice;
-        saleItems.itemDescription = itemDescription;
-        saleItems.category_id = category_id;
-        saleItems.images = images;
-      }
-    } 
-    setSaleItems(copy)
-  }
-
   function handleSearch(newSearch){
     setSearch(newSearch)
   }
@@ -69,7 +55,7 @@ export const DataProvider = ({ children }) =>{
   }
   return (
     <DataContext.Provider value = {{
-      loggedin, logoutUser, currentUser, saleItems, setSaleItems, handleSearch, search, loginUser, addErrors, clearErrors, errors, handleNewPost, handleUpdate
+      loggedin, logoutUser, currentUser, saleItems, setSaleItems, handleSearch, search, loginUser, addErrors, clearErrors, errors, handleNewPost
     }}>
       {children}
       </DataContext.Provider>
