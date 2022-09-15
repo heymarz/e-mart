@@ -33,7 +33,9 @@ This will run the rails server on port [http://localhost:4000](http://localhost:
 
 - User can search for sale item through the search bar
 
-- User can see the purchase of a sale item in order history
+- User can follow items by clicking on the favorite button
+
+- User can see their own sale item and the items that they are following
 
 
 ## MVP
@@ -65,11 +67,11 @@ This will run the rails server on port [http://localhost:4000](http://localhost:
 
 I had set up my models' relationship like this: 
 
-``` Seller -< Item >- Buyer ```
+``` Seller -< ForSaleItem >- Buyer ```
 
 ``` Buyer -< FavoritedItem ```
 
-``` Item >- Category ```
+``` ForSaleItem >- Category ```
 
 
 ### Deploying
@@ -91,3 +93,5 @@ https://medium.com/@corypavitt/send-welcome-email-to-users-using-ruby-on-rails-b
 https://hixonrails.com/ruby-on-rails-tutorials/ruby-on-rails-action-mailer-configuration/
 
 https://youtu.be/ngVvDegsAW8
+
+https://shaqqour.medium.com/how-to-create-a-model-with-two-foreign-keys-references-from-the-same-table-in-rails-1d0ebc744544
