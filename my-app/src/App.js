@@ -8,8 +8,6 @@ import SignupForm from './components/static/SignupForm';
 import PostInput from './components/pages/Posts/PostInput';
 import ErrorPage from "./components/static/ErrorPage";
 import Favorites from "./components/pages/Favorites";
-import PostDetails from './components/pages/Posts/PostDetails';
-import EditPost from './components/pages/Posts/EditPost';
 import Contact from './components/static/Contact';
 import About from './components/static/About';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -63,7 +61,7 @@ function App() {
         <main>
           <Routes>
             <Route
-              path="/" element={<Home handleFavorite={handleFavorite}/>}
+              path="/" element={<Home handleFavorite={handleFavorite} favorites={favorites} />}
             />
             <Route
               path="/login"

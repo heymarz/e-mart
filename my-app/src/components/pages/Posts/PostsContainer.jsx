@@ -4,7 +4,7 @@ import PostCards from './PostCards';
 import Search from "./Search";
 import './post.css'
 
-function PostsContainer({handleFavorite}){
+function PostsContainer({ handleFavorite, favorites }){
   const {saleItems, handleSearch, search, currentUser, setSaleItems} = useContext(DataContext);
 
   function handleUpdate(forSaleItem_id, category_id,itemDescription, itemPrice, itemTitle, images){
@@ -23,16 +23,17 @@ function PostsContainer({handleFavorite}){
     
   function items(){
     if(saleItems){
+      
     return saleItems
       .filter((item)=> 
       item.itemTitle.includes(search.toLowerCase())
-    // and execute this one too!!! ->> item.itemDescription.includes(search.toLowerCase())
     )
     .map((item)=> {
       return(
         <PostCards 
             key={item.id} 
             item={item}
+            favorites={favorites}
             handleFavorite={handleFavorite}
             handleUpdate={handleUpdate}
             buyerId = {currentUser.id}
