@@ -40,7 +40,7 @@ function PostDetails({handleFavorite, handleUpdate, isDetails, setIsDetails}){
         return (
         <div>
           <Button onClick={()=>handleFavorite(id, currentUser.id)}>Favorite</Button>
-          {/* <a href={`mailto:${seller.email}?subject=${itemTitle}`}>Click here to contact Seller</a> */}
+          <a href={`mailto:${seller.email}?subject=${itemTitle}`}>Click here to contact Seller</a>
           <Button onClick={()=>setIsDetails(false)}>Minimize</Button>
         </div>)
       }}
