@@ -20,12 +20,10 @@ function PostsContainer(){
     } 
     setSaleItems(copy)
   }
+  
   function items(){
-    if(saleItems.length > 1){
-      console.log(saleItems)
-    return saleItems
-      .filter((item)=> item.itemTitle.toLowerCase().includes(search.toLowerCase()))
-      .filter((item)=>item.itemDescription.toLowerCase().includes(search.toLowerCase()))
+    if(saleItems){
+      return saleItems.filter((item)=> item.itemTitle.toLowerCase().includes(search.toLowerCase()) || item.itemDescription.toLowerCase().includes(search.toLowerCase()))
     .map((item)=> {
       return(
         <PostCards 
