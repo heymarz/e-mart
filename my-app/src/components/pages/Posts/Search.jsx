@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import DataContext from '../../../DataContext';
 import Button from "react-bootstrap/Button"
 
-function Search({ handleSearch }) {
+function Search() {
   const [search, setSearch] = useState("")
+  const { handleSearch } = useContext(DataContext);
 
   function handleSubmit(e){
     e.preventDefault();
