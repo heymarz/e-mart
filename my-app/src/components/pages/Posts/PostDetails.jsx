@@ -48,7 +48,7 @@ function PostDetails({ handleUpdate, isDetails, setIsDetails}){
 
   return (
     <div className='text-container'>
-      {isEditing ? (<EditPost editPost={isEditing} setIsEditing={setIsEditing} isEditing={isDetails} handleUpdate={handleUpdate} setIsDetails={setIsDetails} />) : isDetails ? (<div>
+      {isEditing ? (<EditPost editPost={isEditing} setIsEditing={setIsEditing} handleUpdate={handleUpdate} setIsDetails={setIsDetails} />) : isDetails ? (<div>
           <h1>{itemTitle}</h1>
           <Carousel infiniteLoop showThumbs>
           {imgs.map((img, index)=>{

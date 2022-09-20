@@ -20,7 +20,7 @@ function PostCards({ item, buyerId, handleUpdate }){
 
   return (
     <div>
-      {isDetails ? (<PostDetails setIsDetails={setIsDetails} isDetails={isDetails} item={item} handleUpdate={handleUpdate} handleFavorite={handleFavorite}/>) :
+      {isDetails ? (<PostDetails setIsDetails={setIsDetails} isDetails={isDetails} handleUpdate={handleUpdate} />) :
       (<div className='cards'>
         <Card style={{ width: '18rem' }}>
           <Card.Img variant="top" src={images} />
