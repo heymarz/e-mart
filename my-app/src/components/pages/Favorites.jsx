@@ -2,8 +2,8 @@ import React, {useContext} from 'react';
 import DataContext from '../../DataContext';
 import PostCards from './Posts/PostCards';
 
-function Favorites({favorites}){
-  const { saleItems, currentUser } = useContext(DataContext);
+function Favorites(){
+  const { saleItems, currentUser, favorites } = useContext(DataContext);
 
   function ownSales(){
     if(saleItems){

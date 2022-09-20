@@ -1,10 +1,10 @@
 import React from 'react';
 import PostsContainer from "./Posts/PostsContainer";
 
-function Home ({ handleFavorite, favorites }) {
+function Home () {
   return (
     <div>
-      <PostsContainer handleFavorite={handleFavorite} favorites={favorites} />
+      <PostsContainer />
     </div>
   )
 }

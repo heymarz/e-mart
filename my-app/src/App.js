@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {DataProvider} from './DataContext';
 import LoginForm from "./components/static/LoginForm"
@@ -13,47 +13,6 @@ import About from './components/static/About';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  const [favorites, setFavorites] = useState([]);
-
-  useEffect(()=>{
-    fetch('/favorites')
-    .then((r)=>r.json())
-    .then(setFavorites)
-  },[])
-
-  function handleFavorite(forSaleItemId, userId){
-    const formData = {
-      buyer_id: userId, 
-      for_sale_item_id: forSaleItemId
-    };
-    for (let i = 0; i < favorites.length; i++) {
-      if (favorites[i].for_sale_item_id === formData.for_sale_item_id && favorites[i].buyer_id === formData.buyer_id){
-        fetch(`/favorites/${favorites[i].id}`,{
-          method: "DELETE"
-        }).then((r)=>{
-          if(r.ok){
-            const newFavArray = favorites.filter((i)=>i.for_sale_item_id !== formData.for_sale_item_id && i.buyer_id === formData.buyer_id)
-            setFavorites(newFavArray)
-          }
-        }) 
-        return "delete"
-      }
-    }
-    fetch(`/favorites`,{
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        "Accept": "application/json",
-      },
-      body: JSON.stringify(formData)
-    })
-    .then(r=> r.json())
-    .then(data=>{
-      favorites.push(data);
-      setFavorites(favorites);
-    })
-  }
-
   return (
     <DataProvider>
       <Router>
@@ -61,7 +20,7 @@ function App() {
         <main>
           <Routes>
             <Route
-              path="/" element={<Home handleFavorite={handleFavorite} favorites={favorites} />}
+              path="/" element={<Home />}
             />
             <Route
               path="/login"
@@ -77,7 +36,7 @@ function App() {
             />
             <Route
               path="/favorites"
-              element={<Favorites favorites={favorites}/>}
+              element={<Favorites />}
             />
             <Route
               exact path="/contact"

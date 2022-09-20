@@ -8,6 +8,7 @@ export const DataProvider = ({ children }) =>{
   const [errors, setErrors] = useState([]);
   const [saleItems, setSaleItems] = useState([]);
   const [search, setSearch] = useState("");
+  const [favorites, setFavorites] = useState([]);
 
   function loginUser(user){
     setCurrentUser(user);
@@ -44,7 +45,7 @@ export const DataProvider = ({ children }) =>{
         setSaleItems(data)
       }
     })
-   },[])
+   },[loggedin])
 
   function handleSearch(newSearch){
     setSearch(newSearch)
@@ -53,9 +54,49 @@ export const DataProvider = ({ children }) =>{
   function handleNewPost(newPost){
     setSaleItems([...saleItems, newPost])
   }
+
+  useEffect(()=>{
+    fetch('/favorites')
+    .then((r)=>r.json())
+    .then(setFavorites)
+  },[loggedin])
+
+  function handleFavorite(forSaleItemId, userId){
+    const formData = {
+      buyer_id: userId, 
+      for_sale_item_id: forSaleItemId
+    };
+    for (let i = 0; i < favorites.length; i++) {
+      if (favorites[i].for_sale_item_id === formData.for_sale_item_id && favorites[i].buyer_id === formData.buyer_id){
+        fetch(`/favorites/${favorites[i].id}`,{
+          method: "DELETE"
+        }).then((r)=>{
+          if(r.ok){
+            const newFavArray = favorites.filter((i)=>i.for_sale_item_id !== formData.for_sale_item_id && i.buyer_id === formData.buyer_id)
+            setFavorites(newFavArray)
+          }
+        }) 
+        return "delete"
+      }
+    }
+    fetch(`/favorites`,{
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(r=> r.json())
+    .then(data=>{
+      favorites.push(data);
+      setFavorites(favorites);
+    })
+  }
+
   return (
     <DataContext.Provider value = {{
-      loggedin, logoutUser, currentUser, saleItems, setSaleItems, handleSearch, search, loginUser, addErrors, clearErrors, errors, handleNewPost
+      loggedin, logoutUser, currentUser, saleItems, setSaleItems, handleSearch, search, loginUser, addErrors, clearErrors, errors, handleNewPost, favorites, handleFavorite
     }}>
       {children}
       </DataContext.Provider>

@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import DataContext from '../../../DataContext';
 import PostDetails from './PostDetails';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './PostCards.scss';
 
-function PostCards({ item, handleFavorite, buyerId, handleUpdate, favorites }){
-  const [isDetails, setIsDetails] = useState(false)
+function PostCards({ item, buyerId, handleUpdate }){
+  const [isDetails, setIsDetails] = useState(false);
+  const {favorites, handleFavorite} = useContext(DataContext)
   const { id, itemTitle, itemDescription, itemPrice, images } = item;
 
   function favToggle(){
