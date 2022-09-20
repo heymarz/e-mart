@@ -12,10 +12,8 @@ function PostCards({ item, buyerId, handleUpdate }){
 
   function favToggle(){
     if(favorites){
-      for (let i = 0; i < favorites.length; i++) {
-      const fav = favorites[i].for_sale_item.id
-      return id === fav ? "unFavorite" : "Favorite"
-  }
+      const fav = favorites.find(fav=>fav.for_sale_item.id === id)
+      return fav ? "unFavorite" : "Favorite"
   }}
 
   return (
