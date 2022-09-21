@@ -32,12 +32,10 @@ export const DataProvider = ({ children }) =>{
     .then(res=>{
       if(res.ok){
         res.json().then(user => {
-        loginUser(user);})
+        loginUser(user);
+        setFavorites(user.favorites)})
       }
     })
-  },[])
-
-  useEffect(()=>{
     fetch('/for_sale_items')
     .then(r=> r.json())
     .then((data)=> {
@@ -45,7 +43,8 @@ export const DataProvider = ({ children }) =>{
         setSaleItems(data)
       }
     })
-   },[loggedin])
+  },[])
+
 
   function handleSearch(newSearch){
     setSearch(newSearch)
@@ -54,12 +53,6 @@ export const DataProvider = ({ children }) =>{
   function handleNewPost(newPost){
     setSaleItems([...saleItems, newPost])
   }
-
-  useEffect(()=>{
-    fetch('/favorites')
-    .then((r)=>r.json())
-    .then(setFavorites)
-  },[loggedin])
 
   function handleFavorite(forSaleItemId, userId){
     const formData = {
@@ -89,8 +82,9 @@ export const DataProvider = ({ children }) =>{
     })
     .then(r=> r.json())
     .then(data=>{
-      favorites.push(data);
-      setFavorites(favorites);
+      const array = [...favorites]
+      array.push(data);
+      setFavorites(array);
     })
   }
 
