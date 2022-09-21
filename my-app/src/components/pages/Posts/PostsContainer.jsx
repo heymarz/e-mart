@@ -5,7 +5,7 @@ import Search from "./Search";
 import './post.css'
 
 function PostsContainer(){
-  const {saleItems, search, currentUser, setSaleItems} = useContext(DataContext);
+  const {saleItems, search, setSaleItems} = useContext(DataContext);
 
   function handleUpdate(forSaleItem_id, category_id,itemDescription, itemPrice, itemTitle, images){
     const copy = [...saleItems];
@@ -30,7 +30,6 @@ function PostsContainer(){
             key={item.id} 
             item={item}
             handleUpdate={handleUpdate}
-            buyerId = {currentUser.id}
           />
       )
     })
@@ -44,7 +43,7 @@ function PostsContainer(){
     <div>
       <h1 className='container'>For Sale Items</h1>
       <Search />
-      <ul>
+      <ul className='card-container'>
         {items()}
       </ul>
     </div>
