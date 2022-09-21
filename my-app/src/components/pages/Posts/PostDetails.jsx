@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
-function PostDetails({ handleUpdate, isDetails, setIsDetails}){
+function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
   const {id, itemTitle, images, itemPrice, itemDescription, seller_id, seller} = isDetails
   const {currentUser, handleFavorite} = useContext(DataContext)
   const [isEditing, setIsEditing] = useState(false);
@@ -40,7 +40,7 @@ function PostDetails({ handleUpdate, isDetails, setIsDetails}){
         return (
         <div>
           <Button onClick={()=>setIsDetails(false)}>Minimize</Button>
-          <Button onClick={()=>handleFavorite(id, currentUser.id)}>Favorite</Button>
+          <Button onClick={()=>handleFavorite(id, currentUser.id)}>{favToggle()}</Button>
           <a href={`mailto:${seller.email}?subject=${itemTitle}`}>Click here to contact Seller</a>
         </div>)
       }}
