@@ -36,6 +36,9 @@ export const DataProvider = ({ children }) =>{
         setFavorites(user.favorites)})
       }
     })
+  },[loggedin, setFavorites])
+
+  useEffect(()=>{
     fetch('/for_sale_items')
     .then(r=> r.json())
     .then((data)=> {
@@ -43,8 +46,7 @@ export const DataProvider = ({ children }) =>{
         setSaleItems(data)
       }
     })
-  },[])
-
+  },[loggedin, setSaleItems])
 
   function handleSearch(newSearch){
     setSearch(newSearch)
@@ -59,13 +61,14 @@ export const DataProvider = ({ children }) =>{
       buyer_id: userId, 
       for_sale_item_id: forSaleItemId
     };
-    for (let i = 0; i < favorites.length; i++) {
-      if (favorites[i].for_sale_item_id === formData.for_sale_item_id && favorites[i].buyer_id === formData.buyer_id){
-        fetch(`/favorites/${favorites[i].id}`,{
+    const array = [...favorites]
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].for_sale_item_id === formData.for_sale_item_id && array[i].buyer_id === formData.buyer_id){
+        fetch(`/favorites/${array[i].id}`,{
           method: "DELETE"
         }).then((r)=>{
           if(r.ok){
-            const newFavArray = favorites.filter((i)=>i.for_sale_item_id !== formData.for_sale_item_id && i.buyer_id === formData.buyer_id)
+            const newFavArray = array.filter((i)=>i.for_sale_item_id !== formData.for_sale_item_id && i.buyer_id !== formData.buyer_id)
             setFavorites(newFavArray)
           }
         }) 
@@ -82,7 +85,6 @@ export const DataProvider = ({ children }) =>{
     })
     .then(r=> r.json())
     .then(data=>{
-      const array = [...favorites]
       array.push(data);
       setFavorites(array);
     })
