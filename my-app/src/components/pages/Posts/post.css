@@ -7,10 +7,7 @@
 .card{
   flex: 33.33%;
 }
-.container{
-  display: flex;
-  flex-wrap: wrap;
-}
+
 .green{
   color: greenyellow;
   font-weight: 600;

@@ -11,11 +11,11 @@ function PostsContainer(){
     const copy = [...saleItems];
     for (const saleItem of copy){
       if(saleItem.id === forSaleItem_id){
-        saleItems.itemTitle = itemTitle;
+        saleItem.itemTitle = itemTitle;
         saleItem.itemPrice = itemPrice;
         saleItem.itemDescription = itemDescription;
         saleItem.category_id = category_id;
-        saleItems.images = images;
+        saleItem.images = images;
       }
     } 
     setSaleItems(copy)
@@ -41,7 +41,7 @@ function PostsContainer(){
   
   return (
     <div>
-      <h1 className='container'>For Sale Items</h1>
+      <h1>For Sale Items</h1>
       <Search />
       <ul className='card-container'>
         {items()}
