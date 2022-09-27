@@ -3,7 +3,7 @@ class FavoritesController < ApplicationController
   def index
     user = User.find_by(id: session[:user_id])
     @favorites = user.favorites
-    render json: @favorites.to_json( :include => :for_sale_item) 
+    render json: @favorites
   end
   
   def create
