@@ -32,8 +32,9 @@ export const DataProvider = ({ children }) =>{
     .then(res=>{
       if(res.ok){
         res.json().then(user => {
-        loginUser(user);
-        setFavorites(user.favorites)})
+          if(user){
+          loginUser(user);
+        setFavorites(user.favorites)}})
       }
     })
   },[loggedin, setFavorites])
@@ -68,7 +69,10 @@ export const DataProvider = ({ children }) =>{
           method: "DELETE"
         }).then((r)=>{
           if(r.ok){
-            const newFavArray = array.filter((i)=>i.for_sale_item_id !== formData.for_sale_item_id && i.buyer_id !== formData.buyer_id)
+            const newFavArray = array.filter((i)=>{
+              
+              return i.for_sale_item_id !== formData.for_sale_item_id && i.buyer_id !== formData.buyer_id})
+              console.log(newFavArray)
             setFavorites(newFavArray)
           }
         }) 
