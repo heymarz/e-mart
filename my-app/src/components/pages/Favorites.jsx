@@ -3,20 +3,16 @@ import DataContext from '../../DataContext';
 import PostCards from './Posts/PostCards';
 
 function Favorites(){
-  const { saleItems, favorites, currentUser } = useContext(DataContext);
+  const { currentUser } = useContext(DataContext);
 
   function wishList(){
-    if(saleItems){
-      const copy = [...saleItems]
-      return copy.filter((saleitem)=>{
-          return favorites.map((fav)=>fav.for_sale_item_id === saleitem.id)
-      })
-      .map((item,index)=>{
-            return <PostCards key={index} item={item}/>
-          })
-          }else{
-            <p>You will see your sale items here.</p>
-        }}
+    if(currentUser.favorites){
+      return currentUser.favorites.map((item,index)=>{
+        return <PostCards key={index} item={item.for_sale_item}/>})
+      }else{
+        return <p>You will see your sale items here.</p>
+      }
+  }
 
   function ownSales(){
     if(currentUser.id){
