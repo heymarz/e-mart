@@ -9,6 +9,7 @@ import PostInput from './components/pages/Posts/PostInput';
 import ErrorPage from "./components/static/ErrorPage";
 import Favorites from "./components/pages/Favorites";
 import Contact from './components/static/Contact';
+import OwnPost from './components/pages/Posts/OwnPost';
 import About from './components/static/About';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -37,6 +38,9 @@ function App() {
             <Route
               path="/favorites"
               element={<Favorites />}
+            />
+            <Route
+              path="/sales" element={<OwnPost />}
             />
             <Route
               exact path="/contact"
