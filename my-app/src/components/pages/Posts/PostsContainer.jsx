@@ -7,13 +7,13 @@ import './post.css'
 function PostsContainer(){
   const {saleItems, search, setSaleItems} = useContext(DataContext);
 
-  function handleUpdate(forSaleItem_id, category_id,itemDescription, itemPrice, itemTitle, images){
+  function handleUpdate(forSaleItem_id, category_id, description, price, title, images){
     const copy = [...saleItems];
     for (const saleItem of copy){
       if(saleItem.id === forSaleItem_id){
-        saleItem.itemTitle = itemTitle;
-        saleItem.itemPrice = itemPrice;
-        saleItem.itemDescription = itemDescription;
+        saleItem.title = title;
+        saleItem.price = price;
+        saleItem.description = description;
         saleItem.category_id = category_id;
         saleItem.images = images;
       }
@@ -23,7 +23,7 @@ function PostsContainer(){
   
   function items(){
     if(saleItems){
-      return saleItems.filter((item)=> item.itemTitle.toLowerCase().includes(search.toLowerCase()) || item.itemDescription.toLowerCase().includes(search.toLowerCase()))
+      return saleItems.filter((item)=> item.title.toLowerCase().includes(search.toLowerCase()) || item.description.toLowerCase().includes(search.toLowerCase()))
     .map((item)=> {
       return(
         <PostCards 

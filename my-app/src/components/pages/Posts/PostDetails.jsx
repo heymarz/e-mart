@@ -9,7 +9,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
 function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
-  const {id, itemTitle, images, itemPrice, itemDescription, seller_id, seller} = isDetails
+  const {id, title, images, price, description} = isDetails
   const {currentUser, handleFavorite} = useContext(DataContext)
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
   const imgs = images.split(", ");
   
   function handleDeleteSalesItem(){
-    fetch(`/for_sale_items/${id}`,{
+    fetch(`/saleItem/${id}`,{
       method: "DELETE",
     }).then(()=>{
       handleUpdate(id)
@@ -41,7 +41,7 @@ function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
         <div>
           <Button onClick={()=>setIsDetails(false)}>Minimize</Button>
           <Button onClick={()=>handleFavorite(id, currentUser.id)}>{favToggle()}</Button>
-          <a href={`mailto:${seller.email}?subject=${itemTitle}`}>Click here to contact Seller</a>
+          {/* <a href={`mailto:${seller.email}?subject=${title}`}>Click here to contact Seller</a> */}
         </div>)
       }}
   }
@@ -49,13 +49,13 @@ function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
   return (
     <div className='text-container'>
       {isEditing ? (<EditPost editPost={isEditing} setIsEditing={setIsEditing} handleUpdate={handleUpdate} setIsDetails={setIsDetails} />) : isDetails ? (<div>
-          <h1>{itemTitle}</h1>
+          <h1>{title}</h1>
           <Carousel infiniteLoop showThumbs>
           {imgs.map((img, index)=>{
         return (<img className="images" src={img} key={index} alt={img}/>)})}
           </Carousel>
-          <Card.Text>Asking Price:<span className='green'> $ </span>{itemPrice}</Card.Text>
-          <Card.Text><span className='scriptHeader'>Owner Comments: </span><span className='commentBox'>{itemDescription}</span></Card.Text>
+          <Card.Text>Asking Price:<span className='green'> $ </span>{price}</Card.Text>
+          <Card.Text><span className='scriptHeader'>Owner Comments: </span><span className='commentBox'>{description}</span></Card.Text>
           {renderContact()}    
         </div>
         ) : null }

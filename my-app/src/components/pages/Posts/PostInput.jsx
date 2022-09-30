@@ -8,9 +8,9 @@ import { v4 } from "uuid";
 import "./post.css";
 
 function PostInput() {
-  const [itemTitle, setItemTitle] = useState("");
-  const [itemPrice, setItemPrice] = useState("");
-  const [itemDescription, setItemDescription] = useState("");
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
   const [images, setImages] = useState(null);
   const [categoryName, setCategoryName] = useState(""); 
   const [chosenCategory, setChosenCategory] = useState("");
@@ -27,12 +27,12 @@ function PostInput() {
     const formData = ({ 
       seller_id: currentUser.id,
       category_id: chosenCategory,
-      itemTitle: itemTitle,
-      itemPrice: itemPrice,
-      itemDescription: itemDescription,
+      title: title,
+      price: price,
+      description: description,
       images: images,
     });
-    if (itemTitle && images) {
+    if (title && images) {
         fetch("/for_sale_items",{
         method: "POST",
         headers: {
@@ -45,9 +45,9 @@ function PostInput() {
       .then((data) => {
         handleNewPost(data);
       })
-      setItemTitle('');
-      setItemPrice('');
-      setItemDescription('');
+      setTitle('');
+      setPrice('');
+      setDescription('');
       setImages(null);
       setCategoryName('');
       alert("Post Added")
@@ -90,27 +90,27 @@ function PostInput() {
           <Form.Label>Post Title: </Form.Label>
           <Form.Control 
             type='text'
-            name='itemTitle'
-            value={itemTitle}
-            onChange={(e)=>setItemTitle(e.target.value)}
+            name='title'
+            value={title}
+            onChange={(e)=>setTitle(e.target.value)}
           />
         </Form.Group>
-        <Form.Group className="ms-5" controlId="formGroupItemPrice">
+        <Form.Group className="ms-5" controlId="formGroupprice">
           <Form.Label>Asking Price: </Form.Label>
           <Form.Control
             type='number'
-            name='itemprice'
-            value={itemPrice}
-            onChange={(e)=>setItemPrice(e.target.value)}
+            name='price'
+            value={price}
+            onChange={(e)=>setPrice(e.target.value)}
           />
         </Form.Group>
-        <Form.Group className="ms-5" controlId="formGroupItemDescription">
+        <Form.Group className="ms-5" controlId="formGroupdescription">
           <Form.Label>Item Description: </Form.Label>
           <Form.Control
             type='textarea'
-            name='itemDescription'
-            value={itemDescription}
-            onChange={(e)=>setItemDescription(e.target.value)}
+            name='description'
+            value={description}
+            onChange={(e)=>setDescription(e.target.value)}
           />
         </Form.Group>
         <label className = "ms-5 mt-3">Please Choose a category</label>

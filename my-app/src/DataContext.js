@@ -34,13 +34,14 @@ export const DataProvider = ({ children }) =>{
         res.json().then(user => {
           if(user){
           loginUser(user);
-        setFavorites(user.favorites)}})
+        setFavorites(user.favorites)
+      }})
       }
     })
   },[loggedin, setFavorites])
 
   useEffect(()=>{
-    fetch('/for_sale_items')
+    fetch('/saleItem')
     .then(r=> r.json())
     .then((data)=> {
       if(data){

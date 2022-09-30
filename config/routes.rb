@@ -6,13 +6,16 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   
   get '/categories', to: 'categories#index'
-  get '/images', to: 'images#index'
   
-  resources :for_sale_items, except: [:new]
+  resources :items, except: [:new]
   
   get '/favorites', to: 'favorites#index'
   post '/favorites', to: 'favorites#create'
   delete '/favorites/:id', to: 'favorites#destroy'
   
+  get '/saleItem', to: 'sale_items#index'
+  post '/saleItem', to: 'sale_items#create'
+  delete '/saleItem/:id', to: 'sale_items#destroy'
+
   root "welcome#index"
 end

@@ -8,7 +8,7 @@ import './PostCards.scss';
 function PostCards({ item, handleUpdate}){
   const [isDetails, setIsDetails] = useState(false);
   const { currentUser, handleFavorite, favorites } = useContext(DataContext)
-  const { id, itemTitle, itemDescription, itemPrice, images } = item;
+  const { id, title, description, price, images } = item;
 
   function favToggle(){
     if(favorites && item){
@@ -23,9 +23,9 @@ function PostCards({ item, handleUpdate}){
         <Card style={{ width: '18rem' }}>
           <Card.Img variant="top" src={images} />
           <Card.Body>
-            <Card.Title>{itemTitle}</Card.Title>
-            <Card.Text><span className='green'>$$ </span>{itemPrice}</Card.Text>
-            <span className='scriptHeader'>Notes from the Owner: </span><Card.Text>{itemDescription}</Card.Text>
+            <Card.Title>{title}</Card.Title>
+            <Card.Text><span className='green'>$$ </span>{price}</Card.Text>
+            <span className='scriptHeader'>Notes from the Owner: </span><Card.Text>{description}</Card.Text>
             <Button onClick={()=>handleFavorite(id, currentUser.id)}>{favToggle()}</Button>
             <Button onClick={()=>setIsDetails(item)}>More Info</Button>
           </Card.Body>
