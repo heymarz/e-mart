@@ -20,6 +20,6 @@ class FavoritesController < ApplicationController
 
   private
   def favorite_params
-    params.require(:favorite).permit(:for_sale_item_id, :buyer_id)
+    params.require(:favorite).permit(:item_id, :buyer_id)
   end
 end
