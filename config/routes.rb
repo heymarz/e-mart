@@ -13,9 +13,9 @@ Rails.application.routes.draw do
   post '/favorites', to: 'favorites#create'
   delete '/favorites/:id', to: 'favorites#destroy'
   
-  get '/saleItem', to: 'sale_items#index'
-  post '/saleItem', to: 'sale_items#create'
-  delete '/saleItem/:id', to: 'sale_items#destroy'
+  get '/saleItems', to: 'sale_items#index'
+  post '/saleItems', to: 'sale_items#create'
+  delete '/saleItems/:id', to: 'sale_items#destroy'
 
   root "welcome#index"
 end

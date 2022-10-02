@@ -6,10 +6,9 @@ function Favorites(){
   const { favorites } = useContext(DataContext);
 
   function wishList(){
-    console.log(`favorites ${JSON.stringify(favorites,null,2)}`);
     if(favorites){
-      return favorites.map((item,index)=>{
-        return <PostCards key={index} item={item.for_sale_item}/>})
+      return favorites.map((fav,index)=>{
+        return <PostCards key={index} item={fav.item}/>})
       }else{
         return <p>You will see your sale items here.</p>
       }

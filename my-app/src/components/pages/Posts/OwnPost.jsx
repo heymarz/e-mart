@@ -6,9 +6,8 @@ function OwnPost() {
   const {currentUser} = useContext(DataContext)
 
   function ownSales(){
-    console.log(`for_sale_items ${JSON.stringify(currentUser.for_sale_items,null,2)}`);
     if(currentUser.id){
-      return currentUser.for_sale_items.map((item,index)=>{
+      return currentUser.saleItems.map((item,index)=>{
         return(
           <PostCards key={index} item={item} />
         )}

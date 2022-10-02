@@ -10,14 +10,14 @@ import { Carousel } from 'react-responsive-carousel';
 
 function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
   const {id, title, images, price, description} = isDetails
-  const {currentUser, handleFavorite} = useContext(DataContext)
+  const {currentUser, handleFavorite, saleItems} = useContext(DataContext)
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
 
   const imgs = images.split(", ");
   
   function handleDeleteSalesItem(){
-    fetch(`/saleItem/${id}`,{
+    fetch(`/saleItems/${id}`,{
       method: "DELETE",
     }).then(()=>{
       handleUpdate(id)
@@ -27,7 +27,7 @@ function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
   
   function renderContact(){
     if(currentUser){
-      if(currentUser.id === seller_id){
+      if( saleItems.sellers.includes(currentUser.id)){
         return (<div>
           <Button onClick={()=>setIsEditing(isDetails)}>Edit</Button>
           <Button variant="outline-info" size="sm" onClick={()=>{handleDeleteSalesItem(id)}}> 

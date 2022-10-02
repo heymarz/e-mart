@@ -12,7 +12,7 @@ function PostCards({ item, handleUpdate}){
 
   function favToggle(){
     if(favorites && item){
-      const fav = favorites.find((fav)=>fav.for_sale_item_id === item.id)
+      const fav = favorites.find((fav)=>fav.item_id === item.id)
       return fav ? "unFavorite" : "Favorite"
   }}
 
