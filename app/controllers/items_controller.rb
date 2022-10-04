@@ -39,6 +39,9 @@ class ItemsController < ApplicationController
     head :no_content
   end
 
+  def item_params
+    params.require(:item).permit(:id, :title, :category_id, :description, :price, :images)
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_item
@@ -46,8 +49,5 @@ class ItemsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
-    def item_params
-      params.require(:item).permit(:id, :title, :category_id, :description, :price, :images)
-    end
 
 end

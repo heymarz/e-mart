@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   
   get '/saleItems', to: 'sale_items#index'
   post '/saleItems', to: 'sale_items#create'
+
   delete '/saleItems/:id', to: 'sale_items#destroy'
 
   root "welcome#index"

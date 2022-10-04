@@ -33,7 +33,7 @@ function EditPost({ editPost, setIsEditing, handleUpdate, setIsDetails }) {
       category_id: chosenCategory
   })
  
-    fetch(`/saleItems/${id}`, {
+    fetch(`/items/${id}`, {
       method: "PATCH",
       headers: {
         'content-type': 'application/json',
@@ -74,7 +74,7 @@ function EditPost({ editPost, setIsEditing, handleUpdate, setIsDetails }) {
     function renderImgs(){
       if(imageArray){
         const displayImgs = imageArray.map((img, index)=>{
-          return (<img className="thumbnail" src={img} key={index} alt={img}/>)
+          return (<img className="thumbnail" src={img} key={img+v4()} alt={img}/>)
         });
         return displayImgs
       }else{
@@ -105,7 +105,7 @@ function EditPost({ editPost, setIsEditing, handleUpdate, setIsDetails }) {
           <Form.Control
             type='number'
             name='price'
-            value={price}
+            value={itemPrice}
             onChange={(e)=>setItemPrice(e.target.value)}
           />
         </Form.Group>
@@ -114,7 +114,7 @@ function EditPost({ editPost, setIsEditing, handleUpdate, setIsDetails }) {
           <Form.Control
             type='textarea'
             name='description'
-            value={description}
+            value={itemDescription}
             onChange={(e)=>setItemDescription(e.target.value)}
           />
         </Form.Group>
@@ -128,7 +128,7 @@ function EditPost({ editPost, setIsEditing, handleUpdate, setIsDetails }) {
               { 
                 categoryName && categoryName.map((cat)=>{
                     return(
-                      <option value={cat.id} key={cat.categoryName}>{cat.categoryName}</option>
+                      <option value={cat.id} key={cat.categoryName}>{cat.category_name}</option>
                     )
                   })
               }

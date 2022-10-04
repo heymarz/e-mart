@@ -9,7 +9,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
 function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
-  const {id, title, images, price, description} = isDetails
+  const { id, title, images, price, description, sellers }= isDetails;
   const {currentUser, handleFavorite, saleItems} = useContext(DataContext)
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
@@ -17,17 +17,17 @@ function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
   const imgs = images.split(", ");
   
   function handleDeleteSalesItem(){
-    fetch(`/saleItems/${id}`,{
+    fetch(`/items/${id}`,{
       method: "DELETE",
     }).then(()=>{
       handleUpdate(id)
       navigate(0)
     })
   }
-  
+   
   function renderContact(){
-    if(currentUser){
-      if( saleItems.sellers.includes(currentUser.id)){
+    if(currentUser && saleItems){
+      if(saleItems.map((item)=>item.sellers.id === currentUser.id)){
         return (<div>
           <Button onClick={()=>setIsEditing(isDetails)}>Edit</Button>
           <Button variant="outline-info" size="sm" onClick={()=>{handleDeleteSalesItem(id)}}> 
@@ -35,24 +35,23 @@ function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
           </Button> 
           </div>
         )
-      }
-      else{
+      }else{
         return (
         <div>
           <Button onClick={()=>setIsDetails(false)}>Minimize</Button>
           <Button onClick={()=>handleFavorite(id, currentUser.id)}>{favToggle()}</Button>
-          {/* <a href={`mailto:${seller.email}?subject=${title}`}>Click here to contact Seller</a> */}
+          <a href={`mailto:${sellers.email}?subject=${title}`}>Click here to contact Seller</a>
         </div>)
       }}
-  }
+    }
 
   return (
     <div className='text-container'>
       {isEditing ? (<EditPost editPost={isEditing} setIsEditing={setIsEditing} handleUpdate={handleUpdate} setIsDetails={setIsDetails} />) : isDetails ? (<div>
           <h1>{title}</h1>
           <Carousel infiniteLoop showThumbs>
-          {imgs.map((img, index)=>{
-        return (<img className="images" src={img} key={index} alt={img}/>)})}
+          {imgs.map((img)=>{
+        return (<img className="images" src={img} key={img} alt={img}/>)})}
           </Carousel>
           <Card.Text>Asking Price:<span className='green'> $ </span>{price}</Card.Text>
           <Card.Text><span className='scriptHeader'>Owner Comments: </span><span className='commentBox'>{description}</span></Card.Text>

@@ -5,7 +5,19 @@ import Search from "./Search";
 import './post.css'
 
 function PostsContainer(){
+  // const [items, setItems] = useState([])
   const {saleItems, search, setSaleItems} = useContext(DataContext);
+
+  // useEffect(()=>{
+  //   fetch('/saleItems')
+  //   .then(r=> r.json())
+  //   .then((data)=> {
+  //   if(data){
+  //       setItems(data);
+  //     }
+  //   })
+  // },[loggedin, setItems])
+
 
   function handleUpdate(forSaleItem_id, category_id, description, price, title, images){
     const copy = [...saleItems];
@@ -21,7 +33,7 @@ function PostsContainer(){
     setSaleItems(copy)
   }
   
-  function items(){
+  function displayItems(){
     if(saleItems){
       return saleItems.filter((item)=> item.title.toLowerCase().includes(search.toLowerCase()) || item.description.toLowerCase().includes(search.toLowerCase()))
     .map((item)=> {
@@ -44,7 +56,7 @@ function PostsContainer(){
       <h1>For Sale Items</h1>
       <Search />
       <ul className='card-container'>
-        {items()}
+        {displayItems()}
       </ul>
     </div>
   )
