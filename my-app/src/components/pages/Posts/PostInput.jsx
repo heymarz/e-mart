@@ -1,4 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
+import Errors from '../../static/Errors';
+import {headers} from "../../../Global";
 import DataContext from '../../../DataContext';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -14,13 +16,18 @@ function PostInput() {
   const [images, setImages] = useState(null);
   const [categoryName, setCategoryName] = useState(""); 
   const [chosenCategory, setChosenCategory] = useState("");
-  const { currentUser, handleNewPost } = useContext(DataContext);
+  const { currentUser, handleNewPost, addErrors, clearErrors, errors } = useContext(DataContext);
 
   useEffect(()=>{
     fetch('/categories')
     .then((r)=>r.json())
     .then((data)=>setCategoryName(data))
   },[])  
+
+  useEffect(()=>{
+    return()=>clearErrors();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
 
   function handleSubmitPost(e){
     e.preventDefault();
@@ -33,17 +40,18 @@ function PostInput() {
       images: images,
     });
     if (title && images) {
-        fetch("/for_sale_items",{
+        fetch("/items",{
         method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "Accept": "application/json",
-        },
+        headers: headers,
         body: JSON.stringify(formData)
       })
       .then((r)=> r.json())
       .then((data) => {
+        if(data.ok){
         handleNewPost(data);
+      }else{
+        addErrors(data.errors)
+      }
       })
       setTitle('');
       setPrice('');
@@ -121,9 +129,9 @@ function PostInput() {
              >
         
               { 
-                categoryName && categoryName.map((cat)=>{
+                categoryName && categoryName.map((cat,index)=>{
                     return(
-                      <option value={cat.id} key={cat.categoryName}>{cat.categoryName}</option>
+                      <option value={cat.id} key={index}>{cat.category_name}</option>
                     )
                   })
               }
@@ -139,6 +147,7 @@ function PostInput() {
           </Form.Group>
           <Button type='submit' className='ms-5 mt-2'>Submit</Button>
       </Form>
+      <Errors errors={errors} />
     </div>
   )
 }
