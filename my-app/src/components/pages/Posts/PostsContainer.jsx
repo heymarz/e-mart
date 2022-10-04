@@ -5,19 +5,7 @@ import Search from "./Search";
 import './post.css'
 
 function PostsContainer(){
-  // const [items, setItems] = useState([])
   const {saleItems, search, setSaleItems} = useContext(DataContext);
-
-  // useEffect(()=>{
-  //   fetch('/saleItems')
-  //   .then(r=> r.json())
-  //   .then((data)=> {
-  //   if(data){
-  //       setItems(data);
-  //     }
-  //   })
-  // },[loggedin, setItems])
-
 
   function handleUpdate(forSaleItem_id, category_id, description, price, title, images){
     const copy = [...saleItems];
