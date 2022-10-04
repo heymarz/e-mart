@@ -65,15 +65,14 @@ useEffect(()=>{
     };
     const array = [...favorites]
     for (let i = 0; i < array.length; i++) {
-      if (array[i].item_id === formData.item_id && array[i].buyer_id === formData.buyer_id){
+      if (array[i].item_id === formData.item_id){
         fetch(`/favorites/${array[i].id}`,{
           method: "DELETE"
         }).then((r)=>{
           if(r.ok){
             const newFavArray = array.filter((i)=>{
-              
-              return i.item_id !== formData.item_id && i.buyer_id !== formData.buyer_id})
-              console.log(newFavArray)
+              return i.item_id !== formData.item_id
+            })
             setFavorites(newFavArray)
           }
         }) 
