@@ -1,15 +1,25 @@
-import React, {useContext} from 'react'
-import DataContext from '../../../DataContext';
+import React, {useState, useEffect} from 'react'
 import PostCards from './PostCards';
 
 function OwnPost() {
-  const {currentUser} = useContext(DataContext)
+  const [items, setItems] = useState([])
+
+  useEffect(()=>{
+    fetch('/saleItems')
+    .then(r=> r.json())
+    .then((data)=> {
+    if(data){
+        setItems(data);
+      }
+    })
+  },[])
+
 
   function ownSales(){
-    if(currentUser.id){
-      return currentUser.saleItems.map((item,index)=>{
+    if(items){
+      return items.map((item,index)=>{
         return(
-          <PostCards key={index} item={item} />
+          <PostCards key={index} item={item.item} />
         )}
       )
     }else{
