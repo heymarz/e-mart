@@ -11,7 +11,7 @@ function Favorites(){
   },[])
 
   function wishList(){
-    if(favArray){
+    if(favArray.length > 0){
        return favArray.map((fav,index)=>{
         return <PostCards key={index} item={fav.item}/>})
       }else{
