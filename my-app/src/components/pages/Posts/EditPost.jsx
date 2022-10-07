@@ -74,7 +74,7 @@ function EditPost({ editPost, setIsEditing, handleUpdate, setIsDetails }) {
     function renderImgs(){
       if(imageArray){
         const displayImgs = imageArray.map((img, index)=>{
-          return (<img className="thumbnail" src={img} key={img+v4()} alt={img}/>)
+          return (<img className="thumbnail" src={img} key={index} alt={img}/>)
         });
         return displayImgs
       }else{
@@ -84,13 +84,6 @@ function EditPost({ editPost, setIsEditing, handleUpdate, setIsDetails }) {
 
   return (
     <Form id="newPostForm" onSubmit={handleUpdatePost}>
-        {/* <Form.Group className="ms-5" controlId="formGroupUserId">
-          <Form.Control 
-            type="hidden"
-            name="userId"
-            value="user.id"
-          />
-        </Form.Group> */}
         <Form.Group className="ms-5" controlId="formGrouppostTitle">
           <Form.Label>Post Title: </Form.Label>
           <Form.Control 
@@ -126,9 +119,9 @@ function EditPost({ editPost, setIsEditing, handleUpdate, setIsDetails }) {
               onChange={(e)=>{setChosenCategory(e.target.value)}}
              >
               { 
-                categoryName && categoryName.map((cat)=>{
+                categoryName && categoryName.map((cat, index)=>{
                     return(
-                      <option value={cat.id} key={cat.categoryName}>{cat.category_name}</option>
+                      <option value={cat.id} key={index}>{cat.category_name}</option>
                     )
                   })
               }
