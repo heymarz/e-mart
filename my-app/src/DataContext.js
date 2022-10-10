@@ -27,6 +27,12 @@ export const DataProvider = ({ children }) =>{
     setErrors([]);
   }
 
+
+  const cleanUp = useEffect(()=>{
+    return()=>clearErrors();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
   useEffect(()=>{
     fetch("/me")
     .then(res=>{

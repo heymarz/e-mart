@@ -19,8 +19,12 @@ class ItemsController < ApplicationController
   # POST /items or /items.json
   def create
     @item = Item.create(item_params)
-    SaleItem.create(seller_id: session[:user_id], item_id: @item.id)
-    render json: @item, status: :created
+    if @item.save
+      SaleItem.create(seller_id: session[:user_id], item_id: @item.id)
+      render json: @item, status: :created
+    else  
+    render json: { errors: @item.errors.full_messages.join(", ") }, status: :unprocessable_entity
+    end
   end
 
   # PATCH/PUT /items/1 or /items/1.json
@@ -39,15 +43,15 @@ class ItemsController < ApplicationController
     head :no_content
   end
 
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_item
+    @item = Item.find_by(id: params[:id])
+  end
+  
+  # Only allow a list of trusted parameters through.
   def item_params
     params.require(:item).permit(:id, :title, :category_id, :description, :price, :images)
   end
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_item
-      @item = Item.find_by(id: params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
 
 end

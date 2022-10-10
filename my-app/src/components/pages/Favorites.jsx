@@ -18,12 +18,10 @@ function Favorites(){
         return <p>You will see your sale items here.</p>
       }
   }
-
- 
         
   return (
     <div>
-        <h2 className='headers'>Wishlist:</h2>
+      <h1 className='headers'>Wishlist:</h1>
       <div className='card-container'>
         {wishList()}
       </div>

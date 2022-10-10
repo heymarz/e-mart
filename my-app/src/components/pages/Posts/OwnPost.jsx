@@ -26,8 +26,7 @@ function OwnPost() {
   }
   return (
     <div>
-      <h1 className='header'>Watching Items:</h1>
-      <h2>Your Sales post:</h2>
+      <h1 className='header'>Your Sales post:</h1>
       <div className='card-container'>
         {ownSales()}
       </div>

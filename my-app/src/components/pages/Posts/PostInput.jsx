@@ -16,7 +16,7 @@ function PostInput() {
   const [images, setImages] = useState(null);
   const [categoryName, setCategoryName] = useState(""); 
   const [chosenCategory, setChosenCategory] = useState("");
-  const { currentUser, handleNewPost, addErrors, clearErrors, errors } = useContext(DataContext);
+  const {handleNewPost, addErrors, clearErrors, errors } = useContext(DataContext);
 
   useEffect(()=>{
     fetch('/categories')
@@ -32,7 +32,6 @@ function PostInput() {
   function handleSubmitPost(e){
     e.preventDefault();
     const formData = ({ 
-      seller_id: currentUser.id,
       category_id: chosenCategory,
       title: title,
       price: price,
@@ -45,20 +44,29 @@ function PostInput() {
         headers: headers,
         body: JSON.stringify(formData)
       })
-      .then((r)=> r.json())
-      .then((data) => {
-        if(data.ok){
-        handleNewPost(data);
-      }else{
-        addErrors(data.errors)
-      }
-      })
-      setTitle('');
-      setPrice('');
-      setDescription('');
-      setImages(null);
-      setCategoryName('');
-      alert("Post Added")
+      .then((r)=>r.json())
+      .then(data=>{
+        if(data.id){
+          handleNewPost(data);
+          
+        }else{
+          addErrors([data.errors])
+        }
+        })
+      // .then((r)=> {
+      //   if(r.ok){
+      //     r.json().then((data) => {
+      //       handleNewPost(data)})
+      //   }else{
+      //   r.json().then(e=>addErrors(Object.entries[e.error].flat()))
+      // }
+      // })
+      // setTitle('');
+      // setPrice('');
+      // setDescription('');
+      // setImages(null);
+      // setCategoryName('');
+      // alert("Post Added")
     }
   }
   
@@ -87,19 +95,13 @@ function PostInput() {
     <div className="text-container">
       <h1 className='header'>Add a new posting</h1>
       <Form id="newPostForm" onSubmit={handleSubmitPost}>
-        <Form.Group className="ms-5" controlId="formGroupUserId">
-          <Form.Control 
-            type="hidden"
-            name="userId"
-            value="currentUser.id"
-          />
-        </Form.Group>
         <Form.Group className="ms-5" controlId="formGroupPostTitle">
           <Form.Label>Post Title: </Form.Label>
           <Form.Control 
             type='text'
             name='title'
             value={title}
+            required={true}
             onChange={(e)=>setTitle(e.target.value)}
           />
         </Form.Group>
@@ -109,6 +111,7 @@ function PostInput() {
             type='number'
             name='price'
             value={price}
+            required={true}
             onChange={(e)=>setPrice(e.target.value)}
           />
         </Form.Group>
@@ -118,6 +121,7 @@ function PostInput() {
             type='textarea'
             name='description'
             value={description}
+            required={true}
             onChange={(e)=>setDescription(e.target.value)}
           />
         </Form.Group>
@@ -142,6 +146,7 @@ function PostInput() {
               name="images"
               multiple = "multiple"
               accept='image/jpg, image/png'
+              required={true}
               onChange={handleImgInput}
             />
           </Form.Group>

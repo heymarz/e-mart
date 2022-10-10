@@ -1,4 +1,3 @@
 class SaleItemSerializer < ActiveModel::Serializer
-  attributes :id, :item_id, :seller, :item
-
+  attributes :id, :item, :seller
 end
