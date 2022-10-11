@@ -21,7 +21,7 @@ function OwnPost() {
         }
       )
     }else{
-      return <p>Looks like you are not following any items yet!</p>
+      return <p>Looks like you don't have any posted sale items yet!</p>
     }
   }
   return (
