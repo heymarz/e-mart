@@ -26,7 +26,7 @@ function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
   }
 
   function renderContact(){
-    if(currentUser && saleItems){
+    if(currentUser && seller){
       if(seller.id === currentUser.id){
         return (<div>
           <Button onClick={()=>setIsEditing(isDetails)}>Edit</Button>
