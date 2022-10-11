@@ -53,20 +53,12 @@ function PostInput() {
           addErrors([data.errors])
         }
         })
-      // .then((r)=> {
-      //   if(r.ok){
-      //     r.json().then((data) => {
-      //       handleNewPost(data)})
-      //   }else{
-      //   r.json().then(e=>addErrors(Object.entries[e.error].flat()))
-      // }
-      // })
-      // setTitle('');
-      // setPrice('');
-      // setDescription('');
-      // setImages(null);
-      // setCategoryName('');
-      // alert("Post Added")
+      setTitle('');
+      setPrice('');
+      setDescription('');
+      setImages(null);
+      setCategoryName('');
+      alert("Post Added")
     }
   }
   

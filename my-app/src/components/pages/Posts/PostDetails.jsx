@@ -9,7 +9,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
 function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
-  const { id, title, images, price, description, sale_item }= isDetails;
+  const { id, title, images, price, description, seller }= isDetails;
   const {currentUser, handleFavorite, saleItems} = useContext(DataContext)
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
@@ -27,8 +27,7 @@ function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
 
   function renderContact(){
     if(currentUser && saleItems){
-      if(sale_item.seller.id === currentUser.id){
-      // if(saleItems.map((item)=>item.sellers.id === currentUser.id)){
+      if(seller.id === currentUser.id){
         return (<div>
           <Button onClick={()=>setIsEditing(isDetails)}>Edit</Button>
           <Button variant="outline-info" size="sm" onClick={()=>{handleDeleteSalesItem(id)}}> 
@@ -41,7 +40,7 @@ function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
         <div>
           <Button onClick={()=>setIsDetails(false)}>Minimize</Button>
           <Button onClick={()=>handleFavorite(id, currentUser.id)}>{favToggle()}</Button>
-          <a href={`mailto:${sale_item.seller.email}?subject=${title}`}>Click here to contact Seller</a>
+          <a href={`mailto:${seller.email}?subject=${title}`}>Click here to contact Seller</a>
         </div>)
       }}
     }
