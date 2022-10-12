@@ -1,18 +1,18 @@
 databases:
-  - name: e-mart
-    databaseName: e-mart
-    user: e-mart
+  - name: emart
+    databaseName: emart
+    user: emart
 
 services:
   - type: web
-    name: e-mart
+    name: emart
     env: ruby
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: e-mart
+          name: emart
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
