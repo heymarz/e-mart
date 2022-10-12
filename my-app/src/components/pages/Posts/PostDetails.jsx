@@ -10,7 +10,7 @@ import { Carousel } from 'react-responsive-carousel';
 
 function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
   const { id, title, images, price, description, seller }= isDetails;
-  const {currentUser, handleFavorite, saleItems} = useContext(DataContext)
+  const {currentUser, handleFavorite} = useContext(DataContext)
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
 

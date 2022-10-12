@@ -1,18 +1,13 @@
-import React, {useEffect,  useState} from 'react';
+import React, {useContext} from 'react';
+import DataContext from "../../DataContext"
 import PostCards from './Posts/PostCards';
 
 function Favorites(){
-  const [favArray, setFavArray] = useState([]);
-
-  useEffect(()=>{
-    fetch("/favorites")
-    .then(r=>r.json())
-    .then(f => setFavArray(f))
-  },[])
+  const {favorites} = useContext(DataContext)
 
   function wishList(){
-    if(favArray.length > 0){
-       return favArray.map((fav,index)=>{
+    if(favorites.length > 0){
+       return favorites.map((fav,index)=>{
         return <PostCards key={index} item={fav.item}/>})
       }else{
         return <p>You will see your sale items here.</p>

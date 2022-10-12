@@ -78,7 +78,7 @@ useEffect(()=>{
             const newFavArray = array.filter((i)=>{
               return i.item_id !== formData.item_id
             })
-            setFavorites(newFavArray)
+            return setFavorites(newFavArray)
           }
         }) 
         return "delete"
