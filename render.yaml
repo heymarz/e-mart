@@ -1,0 +1,19 @@
+databases:
+  - name: e-mart
+    databaseName: e-mart
+    user: e-mart
+
+services:
+  - type: web
+    name: e-mart
+    env: ruby
+    repo: https://github.com/heymarz/e-mart
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: e-mart
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
