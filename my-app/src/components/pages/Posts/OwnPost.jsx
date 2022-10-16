@@ -14,9 +14,12 @@ function OwnPost() {
     })
   },[])
 
+  
   function ownSales(){
     if(items.length > 0){
       return items.map((item,index)=>{
+        const seller = item.seller
+        item.item.seller = seller
         return <PostCards key={index} item={item.item} />
         }
       )

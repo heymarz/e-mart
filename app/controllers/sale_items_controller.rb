@@ -6,6 +6,6 @@ class SaleItemsController < ApplicationController
   end
 
   def sale_item_params
-    params.require(:sale_item).permit(:item_id, :seller_id, :item)
+    params.require(:sale_item).permit(:item_id, :seller_id)
   end
 end
