@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './PostCards.scss';
 
-function PostCards({ item, handleUpdate}){
+function PostCards({ item }){
   const [isDetails, setIsDetails] = useState(false);
   const { currentUser, handleFavorite, favorites } = useContext(DataContext)
   const { id, title, description, price, images } = item;
@@ -18,7 +18,7 @@ function PostCards({ item, handleUpdate}){
 
   return (
     <div>
-      {isDetails ? (<PostDetails setIsDetails={setIsDetails} isDetails={isDetails} handleUpdate={handleUpdate}  favToggle={favToggle}/>) :
+      {isDetails ? (<PostDetails setIsDetails={setIsDetails} isDetails={isDetails} favToggle={favToggle}/>) :
       (<div className='cards'>
         <Card style={{ width: '18rem' }}>
           <Card.Img variant="top" src={images} />

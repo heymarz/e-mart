@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import DataContext from '../../../DataContext';
 import {useNavigate} from "react-router-dom";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
@@ -6,7 +7,8 @@ import { storage } from "../../../firebase";
 import { ref, listAll, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 
-function EditPost({ editPost, setIsEditing, handleUpdate, setIsDetails }) {
+function EditPost({ editPost, setIsEditing, setIsDetails }) {
+  const {handleUpdate} = useContext(DataContext)
   const { title, price, description, images, category_id, id } = editPost;
   const [postTitle, setpostTitle] = useState(title);
   const [itemPrice, setItemPrice] = useState(price)
@@ -43,7 +45,7 @@ function EditPost({ editPost, setIsEditing, handleUpdate, setIsDetails }) {
     })
     .then((r)=>r.json())
     .then((currentPost)=>{
-      handleUpdate(currentPost.id, category_id, currentPost.description, currentPost.price, currentPost.images, currentPost.title);
+      handleUpdate(currentPost.id, category_id, currentPost.description, currentPost.price, currentPost.title, currentPost.images);
       setIsEditing(false)
       setIsDetails(false)
       navigate(0)

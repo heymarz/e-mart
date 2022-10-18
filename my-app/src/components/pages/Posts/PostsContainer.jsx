@@ -5,21 +5,7 @@ import Search from "./Search";
 import './post.css'
 
 function PostsContainer(){
-  const {saleItems, search, setSaleItems} = useContext(DataContext);
-
-  function handleUpdate(forSaleItem_id, category_id, description, price, title, images){
-    const copy = [...saleItems];
-    for (const saleItem of copy){
-      if(saleItem.id === forSaleItem_id){
-        saleItem.title = title;
-        saleItem.price = price;
-        saleItem.description = description;
-        saleItem.category_id = category_id;
-        saleItem.images = images;
-      }
-    } 
-    setSaleItems(copy)
-  }
+  const {saleItems, search} = useContext(DataContext);
   
   function displayItems(){
     if(saleItems){
@@ -29,7 +15,6 @@ function PostsContainer(){
         <PostCards 
             key={item.id} 
             item={item}
-            handleUpdate={handleUpdate}
           />
       )
     })

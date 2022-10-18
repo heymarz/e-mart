@@ -8,9 +8,9 @@ import Button from 'react-bootstrap/Button';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
-function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
+function PostDetails({ isDetails, setIsDetails, favToggle}){
   const { id, title, images, price, description, seller }= isDetails;
-  const {currentUser, handleFavorite} = useContext(DataContext)
+  const {currentUser, handleFavorite, handleUpdate} = useContext(DataContext)
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
       navigate(0)
     })
   }
-
+console.log(isDetails)
   function renderContact(){
     if(currentUser && seller){
       if(seller.id === currentUser.id){
@@ -47,7 +47,7 @@ function PostDetails({ handleUpdate, isDetails, setIsDetails, favToggle}){
 
   return (
     <div className='text-container'>
-      {isEditing ? (<EditPost editPost={isEditing} setIsEditing={setIsEditing} handleUpdate={handleUpdate} setIsDetails={setIsDetails} />) : 
+      {isEditing ? (<EditPost editPost={isEditing} setIsEditing={setIsEditing} setIsDetails={setIsDetails} />) : 
         isDetails ? 
         (<div>
           <h1>{title}</h1>
