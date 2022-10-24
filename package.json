@@ -6,10 +6,7 @@
     "yarn": "1.x"
   },
   "scripts": {
-    "build": "yarn install --prefix client && yarn run build --prefix client",
-    "clean": "rm -rf public",
-    "deploy": "cp -a client/build/. public/",
-    "heroku-postbuild": "yarn run clean && npm run build && npm run deploy"
+    "start": "node index.js"
   },
   "dependencies": {
     "react-router-dom": "^6.2.2"
