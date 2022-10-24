@@ -6,14 +6,17 @@ Hello, this is an API of an electronic store with users of buyers and sellers. T
 
 In order to start our front end with yarn, we have to navigate to the folder called "my-app" by typing the following in another terminal:
 
-### `cd my-app && yarn start`
+     $ cd my-app && yarn start
 
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 In order to start our backend with rails, open another terminal and input:
 
-### `rails s`
+    $ bundle install
+    $ rails 
+    $ db:migrate db:seed
+    $ rails s
 
 This will run the rails server on port [http://localhost:4000](http://localhost:4000).
 
