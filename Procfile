@@ -1,2 +1,2 @@
-web: PORT=4000 yarn start --prefix my-app
+web: node ./src/index.js
 api: PORT=3000 rails s
