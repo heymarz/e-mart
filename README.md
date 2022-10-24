@@ -13,7 +13,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 In order to start our backend with rails, open another terminal and input:
 
-    $ bundle install
+    $ bundle install && npm install
     $ rails 
     $ db:migrate db:seed
     $ rails s
