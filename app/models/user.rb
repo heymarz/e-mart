@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   validates_length_of :username, in: 3..10
   validate :valid_email?
+  validates_uniqueness_of :email
   
   has_many :favorites, foreign_key: :buyer_id
   has_many :sale_items, foreign_key: :seller_id
