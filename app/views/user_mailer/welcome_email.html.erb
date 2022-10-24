@@ -10,7 +10,9 @@
       your username is: <%= @user.username %>.<br>
     </p>
     <p>
-      To login to the site, just follow this link: <%= @url %>.
+      To login to the site, just follow this link: <%= url_for(host: 'http://localhost:4000',
+controller: 'sessions',
+action: 'create')  %>.
     </p>
     <p>Thanks for joining and have a great day!</p>
   </body>

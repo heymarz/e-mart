@@ -4,6 +4,8 @@ Welcome to E-mart.com, <%= @user.username %>
 You have successfully signed up to E-Mart.com,
 your username is: <%= @user.username %>.
 
-To login to the site, just follow this link: <%= @url %>.
+To login to the site, just follow this link: <%= url_for(host: 'http://localhost:4000/',
+controller: 'sessions',
+action: 'create') %>.
 
 Thanks for joining and have a great day!
