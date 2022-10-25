@@ -1,2 +1,2 @@
-web: node ../my-app/src/index.js
-api: PORT=3000 rails s
+web: bundle exec rails s
+release: bin/rake db:migrate
