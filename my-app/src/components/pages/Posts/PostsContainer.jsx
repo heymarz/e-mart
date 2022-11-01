@@ -26,7 +26,7 @@ function PostsContainer(){
   
   return (
     <div>
-      <h1>For Sale Items</h1>
+      <h1 className='header'>For Sale Items</h1>
       <Search />
       <ul className='card-container'>
         {displayItems()}
