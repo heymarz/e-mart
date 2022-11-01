@@ -1,4 +1,4 @@
-puts "🌱 Seeding spices..."
+puts "🌱 Seeding data..."
 
 mars = User.create(username: "mars", email: "mars@gmail.com", password: "mars")
 
