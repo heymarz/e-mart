@@ -4,18 +4,16 @@
 
 Hello, this is an API of an electronic store with users of buyers and sellers. The website displays various items from all sellers and can be searched and filtered by the buyer. This application will be using a react front end and rails as a backend. You will find instructions below on how I had launched this project.
 
-In order to start our front end with yarn, we have to navigate to the folder called "my-app" by typing the following in another terminal:
+In order to start our front end with yarn, we have open up a terminal and type:
 
-     $ cd my-app && yarn start
+     $ cd my-app && yarn install
+     $ yarn start
 
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 In order to start our backend with rails, open another terminal and input:
 
-    $ bundle install && npm install
-    $ rails 
-    $ db:migrate db:seed
     $ rails s
 
 This will run the rails server on port [http://localhost:4000](http://localhost:4000).
