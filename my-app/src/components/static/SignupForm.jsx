@@ -59,6 +59,7 @@ function SignupForm() {
             onChange = {(e)=>setUsername(e.target.value)}
           />
         </Form.Group>
+
         <Form.Group className="ms-5" controlId="formGroupEmail">
           <Form.Label>Email: </Form.Label>
           <Form.Control 
@@ -69,6 +70,7 @@ function SignupForm() {
             onChange = {(e)=>setEmail(e.target.value)}
           />
         </Form.Group>
+
         <Form.Group className="ms-5" controlId="formPassword">
         <Form.Label>Password: </Form.Label>
         <Form.Control
@@ -79,6 +81,7 @@ function SignupForm() {
           autoComplete = "current-password"
         />
         </Form.Group>
+
         <Form.Group className="ms-5" controlId="formPasswordConfirmation">
           <Form.Label>Password Confirmation: </Form.Label>
           <Form.Control
@@ -89,6 +92,7 @@ function SignupForm() {
             autoComplete = "current-password"
           />
         </Form.Group>
+        
         <Button type="submit" className='mt-2 ms-5'>Sign up</Button>
       </Form>
       <Errors errors={errors} />

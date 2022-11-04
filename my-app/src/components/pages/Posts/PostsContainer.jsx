@@ -10,18 +10,21 @@ function PostsContainer(){
   function displayItems(){
     if(saleItems){
       return saleItems.filter((item)=> item.title.toLowerCase().includes(search.toLowerCase()) || item.description.toLowerCase().includes(search.toLowerCase()))
-    .map((item)=> {
+      .map((item)=> {
       return(
         <PostCards 
             key={item.id} 
             item={item}
-          />
+        />
       )
     })
   }else{
-    return <div>
-      <h3 className='error-message'>No Matches were found</h3>
-     <p><b>Try another key word.</b></p> </div>
+    return (
+      <div>
+        <h3 className='error-message'>No Matches were found</h3>
+        <p><b>Try another key word.</b></p> 
+      </div>
+    )
   }}
   
   return (

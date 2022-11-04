@@ -55,6 +55,7 @@ function LoginForm() {
             onChange={(e)=>setUsername(e.target.value)}
           />
         </Form.Group>
+        
         <Form.Group className="ms-5" controlId="formGroupPassword">
           <Form.Label>Password:</Form.Label>
           <Form.Control
@@ -66,7 +67,7 @@ function LoginForm() {
         </Form.Group>
         <br />
         <Button className="ms-5" variant="primary" size="sm" type="submit">Submit</Button>
-        
+  
       </Form>
       <Errors errors={errors} />
     </div>

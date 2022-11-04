@@ -8,7 +8,8 @@ function Favorites(){
   function wishList(){
     if(favorites.length > 0){
        return favorites.map((fav,index)=>{
-        return <PostCards key={index} item={fav.item}/>})
+          return <PostCards key={index} item={fav.item}/>
+        })
       }else{
         return <p>You will see your sale items here.</p>
       }

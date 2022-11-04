@@ -75,11 +75,7 @@ I had set up my models' relationship like this:
 ``` Buyer -< FavoritedItem ```
 
 ``` ForSaleItem >- Category ```
-
-
-### Deploying
-
-I had deployed my API to Heroku. 
+ 
 
 ### Resources
 
