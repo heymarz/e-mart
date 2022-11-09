@@ -4,6 +4,17 @@
 
 Hello, this is an API of an electronic store with users of buyers and sellers. The website displays various items from all sellers and can be searched and filtered by the buyer. This application will be using a react front end and rails as a backend. You will find instructions below on how I had launched this project.
 
+## Setup
+
+Start by cloning (not forking) the project template repository in your terminal:
+
+    $ git@github.com:heymarz/e-mart.git
+    $ cd e-mart
+
+Let's open VS Code by typing in the command: 
+
+$ code .
+
 In order to start our front end with yarn, we have open up a terminal and type:
 
      $ cd my-app && yarn install
@@ -14,6 +25,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 In order to start our backend with rails, open another terminal and input:
 
+    $ bundle install
+    $ rails db:create
+    $ rails db:migrate db:seed
     $ rails s
 
 This will run the rails server on port [http://localhost:4000](http://localhost:4000).
