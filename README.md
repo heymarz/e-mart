@@ -13,7 +13,7 @@ Start by cloning (not forking) the project template repository in your terminal:
 
 Let's open VS Code by typing in the command: 
 
-$ code .
+    $ code .
 
 In order to start our front end with yarn, we have open up a terminal and type:
 
