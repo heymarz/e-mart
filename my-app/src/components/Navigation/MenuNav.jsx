@@ -43,7 +43,7 @@ const {loggedin, logoutUser} = useContext(DataContext)
   }
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="info" >
+    <Navbar collapseOnSelect expand="" bg="info" >
       <Container>
         <Navbar.Brand href="#home"><GrCart />E-Mart</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
